@@ -71,6 +71,15 @@ public class CatScriptTokenizerTest extends CatscriptTestBase {
                 EQUAL, EQUAL_EQUAL,
                 GREATER, GREATER_EQUAL,
                 LESS, LESS_EQUAL, EOF);
+        assertTokensAre("( ) { } [ ] : , . - + / * != = == > >= < <=",
+                "(", ")",
+                "{", "}",
+                "[", "]",
+                ":", ",", ".", "-", "+", "/", "*",
+                "!=",
+                "=", "==",
+                ">", ">=",
+                "<", "<=", "<EOF>");
     }
 
     @Test
