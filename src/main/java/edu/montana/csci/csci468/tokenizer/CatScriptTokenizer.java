@@ -42,7 +42,9 @@ public class CatScriptTokenizer {
         if (peek() == '\"') {
             int start = postion;
             do {
-                takeChar();
+                matchAndConsume('\\');
+                if (!tokenizationEnd())
+                    takeChar();
             } while (!tokenizationEnd() && peek() != '\"');
             String value;
             if (!tokenizationEnd()) {
@@ -153,9 +155,7 @@ public class CatScriptTokenizer {
             } else {
                 tokenList.addToken(LESS, "<", start, postion, line, lineOffset);
             }
-        } else if (matchAndConsume('\n')) {
-            line ++;
-        }else{
+        } else {
             tokenList.addToken(ERROR, "<Unexpected Token: [" + takeChar() + "]>", start, postion, line, lineOffset);
         }
     }
@@ -165,12 +165,13 @@ public class CatScriptTokenizer {
         while (!tokenizationEnd()) {
             char c = peek();
             if (c == ' ' || c == '\r' || c == '\t') {
+                lineOffset++;
                 postion++;
                 continue;
             } else if (c == '\n') {
                 postion++;
                 line++;
-                lineOffset ++;
+                lineOffset = 0;
                 continue;
             }
             break;
@@ -202,6 +203,7 @@ public class CatScriptTokenizer {
 
     private char takeChar() {
         char c = src.charAt(postion);
+        lineOffset++;
         postion++;
         return c;
     }
