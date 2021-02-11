@@ -26,13 +26,13 @@ public class CatScriptTokenizer {
     }
 
     private void scanToken() {
-        if(scanNumber()) {
+        if (scanNumber()) {
             return;
         }
-        if(scanString()) {
+        if (scanString()) {
             return;
         }
-        if(scanIdentifier()) {
+        if (scanIdentifier()) {
             return;
         }
         scanSyntax();
@@ -40,11 +40,29 @@ public class CatScriptTokenizer {
 
     private boolean scanString() {
         // TODO implement string scanning here!
+        if (peek() == '\"') {
+            int start = postion;
+            do {
+                takeChar();
+            } while (!tokenizationEnd() && peek() != '\"');
+            String value;
+            if (!tokenizationEnd()) {
+                takeChar();
+                value = src.substring(start + 1, postion - 1);
+                System.out.println("VALUE: " + value);
+                tokenList.addToken(STRING, value, start, postion, line, lineOffset);
+            }
+            else{
+                value = src.substring(start, postion);
+                tokenList.addToken(ERROR,value,start,postion,line,lineOffset);
+            }
+            return true;
+        }
         return false;
     }
 
     private boolean scanIdentifier() {
-        if( isAlpha(peek())) {
+        if (isAlpha(peek())) {
             int start = postion;
             while (isAlphaNumeric(peek())) {
                 takeChar();
@@ -62,7 +80,7 @@ public class CatScriptTokenizer {
     }
 
     private boolean scanNumber() {
-        if(isDigit(peek())) {
+        if (isDigit(peek())) {
             int start = postion;
             while (isDigit(peek())) {
                 takeChar();
@@ -78,11 +96,11 @@ public class CatScriptTokenizer {
         // TODO - implement rest of syntax scanning
         //      - implement comments
         int start = postion;
-        if(matchAndConsume('+')) {
+        if (matchAndConsume('+')) {
             tokenList.addToken(PLUS, "+", start, postion, line, lineOffset);
-        } else if(matchAndConsume('-')) {
+        } else if (matchAndConsume('-')) {
             tokenList.addToken(MINUS, "-", start, postion, line, lineOffset);
-        } else if(matchAndConsume('=')) {
+        } else if (matchAndConsume('=')) {
             if (matchAndConsume('=')) {
                 tokenList.addToken(EQUAL_EQUAL, "==", start, postion, line, lineOffset);
             } else {
