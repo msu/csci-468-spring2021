@@ -28,7 +28,7 @@ public enum TokenType {
     static {
         KEYWORDS.put("else", ELSE);
         KEYWORDS.put("false", FALSE);
-        KEYWORDS.put("foo", FUNCTION);
+        KEYWORDS.put("function", FUNCTION);
         KEYWORDS.put("for", FOR);
         KEYWORDS.put("in", IN);
         KEYWORDS.put("if", IF);
