@@ -10,6 +10,7 @@ import edu.montana.csci.csci468.parser.expressions.Expression;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 public class ForStatement extends Statement {
     private Expression expression;
@@ -73,7 +74,13 @@ public class ForStatement extends Statement {
     //==============================================================
     @Override
     public void execute(CatscriptRuntime runtime) {
-        super.execute(runtime);
+        List values = (List) expression.evaluate(runtime);
+        for (Object value : values) {
+            runtime.setValue(variableName, value);
+            for (Statement statement : body) {
+                statement.execute(runtime);
+            }
+        }
     }
 
     @Override

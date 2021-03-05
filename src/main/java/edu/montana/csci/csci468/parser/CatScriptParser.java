@@ -7,7 +7,6 @@ import edu.montana.csci.csci468.tokenizer.Token;
 import edu.montana.csci.csci468.tokenizer.TokenList;
 import edu.montana.csci.csci468.tokenizer.TokenType;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -151,58 +150,59 @@ public class CatScriptParser {
         }
     }
 
+    // With enough if statements i can do anything
     private Expression parsePrimaryExpression() {
+        Token token;
         if (tokens.match(INTEGER)) {
-            Token integerToken = tokens.consumeToken();
-            IntegerLiteralExpression integerExpression = new IntegerLiteralExpression(integerToken.getStringValue());
-            integerExpression.setToken(integerToken);
+            token = tokens.consumeToken();
+            IntegerLiteralExpression integerExpression = new IntegerLiteralExpression(token.getStringValue());
+            integerExpression.setToken(token);
             return integerExpression;
         } else if (tokens.match(IDENTIFIER)) {
-            Token identifierToken = tokens.consumeToken();
-            IdentifierExpression identifierExpression = new IdentifierExpression(identifierToken.getStringValue());
-            identifierExpression.setToken(identifierToken);
+            token = tokens.consumeToken();
+            IdentifierExpression identifierExpression = new IdentifierExpression(token.getStringValue());
+            identifierExpression.setToken(token);
             return identifierExpression;
         } else if (tokens.match(STRING)) {
-            Token identifierToken = tokens.consumeToken();
-            StringLiteralExpression stringExpression = new StringLiteralExpression(identifierToken.getStringValue());
-            stringExpression.setToken(identifierToken);
+            token = tokens.consumeToken();
+            StringLiteralExpression stringExpression = new StringLiteralExpression(token.getStringValue());
+            stringExpression.setToken(token);
             return stringExpression;
         } else if (tokens.match(TRUE)) {
-            Token identifierToken = tokens.consumeToken();
+            token = tokens.consumeToken();
             BooleanLiteralExpression booleanExpression = new BooleanLiteralExpression(true);
-            booleanExpression.setToken(identifierToken);
+            booleanExpression.setToken(token);
             return booleanExpression;
         } else if (tokens.match(FALSE)) {
-            Token identifierToken = tokens.consumeToken();
+            token = tokens.consumeToken();
             BooleanLiteralExpression booleanExpression = new BooleanLiteralExpression(false);
-            booleanExpression.setToken(identifierToken);
+            booleanExpression.setToken(token);
             return booleanExpression;
         } else if (tokens.match(NULL)) {
-            Token identifierToken = tokens.consumeToken();
+            token = tokens.consumeToken();
             NullLiteralExpression nullLiteralExpression = new NullLiteralExpression();
-            nullLiteralExpression.setToken(identifierToken);
+            nullLiteralExpression.setToken(token);
             return nullLiteralExpression;
         } else if (tokens.match(FUNCTION)) {
-            Token identifierToken = tokens.consumeToken();
+            token = tokens.consumeToken();
             if (tokens.matchAndConsume(LEFT_PAREN)) {
                 List<Expression> argumentList = new ArrayList<>(0);
                 boolean terminated = true;
-                if(!tokens.matchAndConsume(RIGHT_PAREN)){
+                if (!tokens.matchAndConsume(RIGHT_PAREN)) {
                     argumentList.add(parseExpression());
                     while (tokens.matchAndConsume(COMMA)) {
                         argumentList.add(parseExpression());
                     }
                     terminated = false;
                 }
-                FunctionCallExpression functionCallExpression = new FunctionCallExpression(identifierToken.getStringValue(), argumentList);
-                functionCallExpression.setToken(identifierToken);
-                if (!tokens.matchAndConsume(RIGHT_PAREN) && !terminated) {
-                    functionCallExpression.addError(ErrorType.UNTERMINATED_ARG_LIST);
+                FunctionCallExpression functionCallExpression = new FunctionCallExpression(token.getStringValue(), argumentList);
+                functionCallExpression.setToken(token);
+                if (!terminated) {
+                    require(RIGHT_PAREN, functionCallExpression, ErrorType.UNTERMINATED_ARG_LIST);
                 }
                 return functionCallExpression;
             }
-        } else if (tokens.match(LEFT_BRACKET)) {
-            Token leftBracket = tokens.consumeToken();
+        } else if (tokens.matchAndConsume(LEFT_BRACKET)) {
             List<Expression> listArguments = new ArrayList<>(0);
             boolean terminated = true;
             if (!tokens.matchAndConsume(RIGHT_BRACKET)) {
@@ -213,17 +213,15 @@ public class CatScriptParser {
                 terminated = false;
             }
             ListLiteralExpression functionCallExpression = new ListLiteralExpression(listArguments);
-            if (!tokens.matchAndConsume(RIGHT_BRACKET) && !terminated) {
-                functionCallExpression.addError(ErrorType.UNTERMINATED_LIST);
+            if (!terminated) {
+                require(RIGHT_BRACKET, functionCallExpression, ErrorType.UNTERMINATED_LIST);
             }
             return functionCallExpression;
         } else if (tokens.matchAndConsume(LEFT_PAREN)) {
             Expression expression = parseExpression();
             return new ParenthesizedExpression(expression);
         }
-
-        SyntaxErrorExpression syntaxErrorExpression = new SyntaxErrorExpression(tokens.consumeToken());
-        return syntaxErrorExpression;
+        return new SyntaxErrorExpression(tokens.consumeToken());
     }
 
     //============================================================
