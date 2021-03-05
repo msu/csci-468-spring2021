@@ -46,13 +46,11 @@ public class CatScriptTokenizer {
                 if (!tokenizationEnd())
                     takeChar();
             } while (!tokenizationEnd() && peek() != '\"');
-            String value;
+            String value = src.substring(++start, postion);
             if (!tokenizationEnd()) {
                 takeChar();
-                value = src.substring(start + 1, postion - 1);
                 tokenList.addToken(STRING, value, start, postion, line, lineOffset);
             } else {
-                value = src.substring(start, postion);
                 tokenList.addToken(ERROR, value, start, postion, line, lineOffset);
             }
             return true;
@@ -161,7 +159,6 @@ public class CatScriptTokenizer {
     }
 
     private void consumeWhitespace() {
-        // TODO update line and lineOffsets
         while (!tokenizationEnd()) {
             char c = peek();
             if (c == ' ' || c == '\r' || c == '\t') {
