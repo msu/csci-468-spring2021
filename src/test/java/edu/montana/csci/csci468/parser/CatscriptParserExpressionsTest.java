@@ -6,7 +6,7 @@ import edu.montana.csci.csci468.parser.statements.CatScriptProgram;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CatscriptParserExpressionsTest extends CatscriptTestBase {
+public class  CatscriptParserExpressionsTest extends CatscriptTestBase {
 
     @Test
     public void parseIntegerLiteralWorks() {

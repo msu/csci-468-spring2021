@@ -8,6 +8,7 @@ import edu.montana.csci.csci468.tokenizer.TokenList;
 import edu.montana.csci.csci468.tokenizer.TokenType;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import static edu.montana.csci.csci468.tokenizer.TokenType.*;
@@ -56,7 +57,48 @@ public class CatScriptParser {
         if (printStmt != null) {
             return printStmt;
         }
+        Statement forStmt = parseForStatement();
+        if (forStmt != null) {
+            return forStmt;
+        }
+        Statement varStm = parseVariableStatement();
+        if(varStm != null){
+            return varStm;
+        }
         return new SyntaxErrorStatement(tokens.consumeToken());
+    }
+
+    private Statement parseVariableStatement() {
+        if (tokens.match(VAR)) {
+            VariableStatement variableStatement = new VariableStatement();
+            variableStatement.setStart(tokens.consumeToken());
+            if (tokens.match(IDENTIFIER)) {
+                Token token = tokens.getCurrentToken();
+                variableStatement.setVariableName(token.getStringValue());
+            }
+
+            return variableStatement;
+        }
+        return null;
+    }
+
+    private Statement parseForStatement() {
+        if (tokens.match(FOR)) {
+            ForStatement forStatement = new ForStatement();
+            forStatement.setStart(tokens.consumeToken());
+            require(LEFT_PAREN, forStatement);
+            require(IDENTIFIER, forStatement);
+            forStatement.setExpression(parseExpression());
+            require(RIGHT_PAREN, forStatement);
+            require(LEFT_BRACE, forStatement);
+            List<Statement> statements = new LinkedList<>();
+            statements.add(parseProgramStatement());
+            forStatement.setBody(statements);
+            Token token = require(RIGHT_BRACE, forStatement);
+            forStatement.setEnd(token);
+            return forStatement;
+        }
+        return null;
     }
 
     private Statement parsePrintStatement() {

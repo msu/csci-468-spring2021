@@ -62,6 +62,7 @@ public class ForStatement extends Statement {
         for (Statement statement : body) {
             statement.validate(symbolTable);
         }
+
         symbolTable.popScope();
     }
 
