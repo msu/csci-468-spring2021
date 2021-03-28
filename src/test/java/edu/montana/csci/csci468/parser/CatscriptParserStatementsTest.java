@@ -133,7 +133,7 @@ public class CatscriptParserStatementsTest extends CatscriptTestBase {
 
     @Test
     public void functionCallStatement() {
-        FunctionCallStatement expr = parseStatement("x(1, 2, 3) y = 1", false);
+        FunctionCallStatement expr = parseStatement("x(1, 2, 3)", false);
         assertNotNull(expr);
         assertEquals("x", expr.getName());
         assertEquals(3, expr.getArguments().size());

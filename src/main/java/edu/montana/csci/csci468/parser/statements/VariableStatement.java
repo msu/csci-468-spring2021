@@ -48,8 +48,14 @@ public class VariableStatement extends Statement {
         if (symbolTable.hasSymbol(variableName)) {
             addError(ErrorType.DUPLICATE_NAME);
         } else {
-            // TODO if there is an explicit type, ensure it is correct
-            //      if not, infer the type from the right hand side expression
+            if(explicitType == null){
+                type = expression.getType();
+            }
+            else{
+                if(explicitType != expression.getType()){
+                    addError(ErrorType.INCOMPATIBLE_TYPES);
+                }
+            }
             symbolTable.registerSymbol(variableName, type);
         }
     }
