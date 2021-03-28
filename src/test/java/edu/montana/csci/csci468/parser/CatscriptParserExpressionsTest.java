@@ -108,7 +108,7 @@ public class  CatscriptParserExpressionsTest extends CatscriptTestBase {
     @Test
     public void parseUnterminatedFunctionCallExpression() {
         FunctionCallExpression expr = parseExpression("foo(1, 2", false);
-        assertEquals("foof", expr.getName());
+        assertEquals("foo", expr.getName());
         assertEquals(2, expr.getArguments().size());
         assertTrue(expr.hasError(ErrorType.UNTERMINATED_ARG_LIST));
     }

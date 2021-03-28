@@ -51,7 +51,7 @@ public class AdditiveExpression extends Expression {
             if(!leftHandSide.getType().equals(CatscriptType.STRING)){
                 leftHandSide.addError(ErrorType.INCOMPATIBLE_TYPES);
             }
-            if(!rightHandSide.getType().equals(CatscriptType.STRING) && !rightHandSide.getType().equals(CatscriptType.STRING)){
+            if(!rightHandSide.getType().equals(CatscriptType.STRING) && !rightHandSide.getType().equals(CatscriptType.INT)){
                 rightHandSide.addError(ErrorType.INCOMPATIBLE_TYPES);
             }
         }
