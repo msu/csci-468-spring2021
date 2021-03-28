@@ -60,7 +60,8 @@ public class ListLiteralExpression extends Expression {
 
     @Override
     public Object evaluate(CatscriptRuntime runtime) {
-        ArrayList<Expression> arrayList = new ArrayList<>(values);
+        ArrayList<Object> arrayList = new ArrayList<>();
+        values.forEach(expression -> arrayList.add(expression.evaluate(runtime)));
         return arrayList;
     }
 

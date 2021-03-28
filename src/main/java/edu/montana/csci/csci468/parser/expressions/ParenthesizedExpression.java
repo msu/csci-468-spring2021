@@ -35,6 +35,7 @@ public class ParenthesizedExpression extends Expression {
 
     @Override
     public Object evaluate(CatscriptRuntime runtime) {
+
         return expression.evaluate(runtime);
     }
 

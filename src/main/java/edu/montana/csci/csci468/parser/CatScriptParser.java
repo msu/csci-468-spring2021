@@ -74,6 +74,9 @@ public class CatScriptParser {
             if (tokens.matchAndConsume(EQUAL)) {
                 return parseAssignmentStatement(variable_name);
             }
+            else if(tokens.match(LEFT_PAREN)){
+                return new FunctionCallStatement(parseFunctionExpression(variable_name));
+            }
         }
         if (tokens.match(FUNCTION)) {
             return parseFunctionDeclarationStatement();
@@ -324,20 +327,22 @@ public class CatScriptParser {
     private FunctionCallExpression parseFunctionExpression(Token start) {
         List<Expression> argumentList = new ArrayList<>();
         boolean terminated = true;
-        if (!tokens.matchAndConsume(RIGHT_PAREN)) {
-            argumentList.add(parseExpression());
-            while (tokens.matchAndConsume(COMMA)) {
+        if(tokens.matchAndConsume(LEFT_PAREN)) {
+            if (!tokens.matchAndConsume(RIGHT_PAREN)) {
                 argumentList.add(parseExpression());
+                while (tokens.matchAndConsume(COMMA)) {
+                    argumentList.add(parseExpression());
+                }
+                terminated = false;
             }
-            terminated = false;
+            FunctionCallExpression functionCallExpression = new FunctionCallExpression(start.getStringValue(), argumentList);
+            functionCallExpression.setToken(start);
+            if (!terminated) {
+                require(RIGHT_PAREN, functionCallExpression, ErrorType.UNTERMINATED_ARG_LIST);
+            }
+            return functionCallExpression;
         }
-        FunctionCallExpression functionCallExpression = new FunctionCallExpression(start.getStringValue(), argumentList);
-        functionCallExpression.setToken(start);
-        if (!terminated) {
-            require(RIGHT_PAREN, functionCallExpression, ErrorType.UNTERMINATED_ARG_LIST);
-        }
-        return functionCallExpression;
-
+        return null;
     }
 
     // With enough if statements i can do anything
@@ -350,7 +355,7 @@ public class CatScriptParser {
             return integerExpression;
         } else if (tokens.match(IDENTIFIER)) {
             token = tokens.consumeToken();
-            if (tokens.matchAndConsume(LEFT_PAREN)) {
+            if (tokens.match(LEFT_PAREN)) {
                 return parseFunctionExpression(token);
             } else {
                 IdentifierExpression identifierExpression = new IdentifierExpression(token.getStringValue());
@@ -394,7 +399,9 @@ public class CatScriptParser {
             return functionCallExpression;
         } else if (tokens.matchAndConsume(LEFT_PAREN)) {
             Expression expression = parseExpression();
-            return new ParenthesizedExpression(expression);
+            ParenthesizedExpression parenthesizedExpression = new ParenthesizedExpression(expression);
+            require(RIGHT_PAREN,parenthesizedExpression);
+            return parenthesizedExpression;
         }
         return new SyntaxErrorExpression(tokens.consumeToken());
     }
