@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CatscriptFunctionArgsAndReturnEvalTest extends CatscriptTestBase
-{
+public class CatscriptFunctionArgsAndReturnEvalTest extends CatscriptTestBase {
     @Test
     void voidFunctionWorksProperly() {
         assertEquals("10\n", executeProgram("var x = 10\n" +
@@ -101,7 +100,6 @@ public class CatscriptFunctionArgsAndReturnEvalTest extends CatscriptTestBase
         assertEquals("[1, 2, 3]\n", executeProgram("function foo() : list<int> { return [1, 2, 3] }" +
                 "print(foo())"));
     }
-
 
 
 }
