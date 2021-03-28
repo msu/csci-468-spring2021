@@ -24,11 +24,11 @@
 [INFO]  T E S T S
 [INFO] -------------------------------------------------------
 [INFO] Running edu.montana.csci.csci468.parser.CatscriptParserExpressionsTest
-[INFO] Tests run: 29, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.098 s - in edu.montana.csci.csci468.parser.CatscriptParserExpressionsTest
+[INFO] Tests run: 29, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.072 s - in edu.montana.csci.csci468.parser.CatscriptParserExpressionsTest
 [INFO] Running edu.montana.csci.csci468.parser.CatscriptParserErrorsTest
-[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.002 s - in edu.montana.csci.csci468.parser.CatscriptParserErrorsTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s - in edu.montana.csci.csci468.parser.CatscriptParserErrorsTest
 [INFO] Running edu.montana.csci.csci468.parser.CatscriptParserStatementsTest
-[ERROR] Tests run: 21, Failures: 0, Errors: 19, Skipped: 0, Time elapsed: 0.061 s <<< FAILURE! - in edu.montana.csci.csci468.parser.CatscriptParserStatementsTest
+[ERROR] Tests run: 21, Failures: 0, Errors: 18, Skipped: 0, Time elapsed: 0.032 s <<< FAILURE! - in edu.montana.csci.csci468.parser.CatscriptParserStatementsTest
 [ERROR] functionDefStatement  Time elapsed: 0.001 s  <<< ERROR!
 edu.montana.csci.csci468.parser.ParseErrorException: 
 Parse Errors Occurred:
@@ -132,86 +132,8 @@ Error: Unexpected Token
 
 	at edu.montana.csci.csci468.parser.CatscriptParserStatementsTest.functionDefWithParamsStatement(CatscriptParserStatementsTest.java:152)
 
-[ERROR] varStatementWithListType  Time elapsed: 0.002 s  <<< ERROR!
-edu.montana.csci.csci468.parser.ParseErrorException: 
-Parse Errors Occurred:
-
-Line 1:var x : list<int> = [1, 2, 3]
-      ^
-
-Error: Unexpected Token
-
-Line 1:var x : list<int> = [1, 2, 3]
-          ^
-
-Error: Unexpected Token
-
-Line 1:var x : list<int> = [1, 2, 3]
-            ^
-
-Error: Unexpected Token
-
-Line 1:var x : list<int> = [1, 2, 3]
-              ^
-
-Error: Unexpected Token
-
-Line 1:var x : list<int> = [1, 2, 3]
-                  ^
-
-Error: Unexpected Token
-
-Line 1:var x : list<int> = [1, 2, 3]
-                   ^
-
-Error: Unexpected Token
-
-Line 1:var x : list<int> = [1, 2, 3]
-                      ^
-
-Error: Unexpected Token
-
-Line 1:var x : list<int> = [1, 2, 3]
-                        ^
-
-Error: Unexpected Token
-
-Line 1:var x : list<int> = [1, 2, 3]
-                          ^
-
-Error: Unexpected Token
-
-Line 1:var x : list<int> = [1, 2, 3]
-                           ^
-
-Error: Unexpected Token
-
-Line 1:var x : list<int> = [1, 2, 3]
-                            ^
-
-Error: Unexpected Token
-
-Line 1:var x : list<int> = [1, 2, 3]
-                              ^
-
-Error: Unexpected Token
-
-Line 1:var x : list<int> = [1, 2, 3]
-                               ^
-
-Error: Unexpected Token
-
-Line 1:var x : list<int> = [1, 2, 3]
-                                 ^
-
-Error: Unexpected Token
-
-Line 1:var x : list<int> = [1, 2, 3]
-                                  ^
-
-Error: Unexpected Token
-
-
+[ERROR] varStatementWithListType  Time elapsed: 0 s  <<< ERROR!
+java.lang.NullPointerException
 	at edu.montana.csci.csci468.parser.CatscriptParserStatementsTest.varStatementWithListType(CatscriptParserStatementsTest.java:119)
 
 [ERROR] ifStatementParses  Time elapsed: 0 s  <<< ERROR!
@@ -226,116 +148,23 @@ java.lang.ClassCastException: class edu.montana.csci.csci468.parser.statements.S
 java.lang.ClassCastException: class edu.montana.csci.csci468.parser.statements.SyntaxErrorStatement cannot be cast to class edu.montana.csci.csci468.parser.statements.IfStatement (edu.montana.csci.csci468.parser.statements.SyntaxErrorStatement and edu.montana.csci.csci468.parser.statements.IfStatement are in unnamed module of loader 'app')
 	at edu.montana.csci.csci468.parser.CatscriptParserStatementsTest.ifStatementEnsuresClosingBrace(CatscriptParserStatementsTest.java:52)
 
-[ERROR] varStatementWithBoolType  Time elapsed: 0.001 s  <<< ERROR!
-edu.montana.csci.csci468.parser.ParseErrorException: 
-Parse Errors Occurred:
-
-Line 1:var x : bool = true
-      ^
-
-Error: Unexpected Token
-
-Line 1:var x : bool = true
-          ^
-
-Error: Unexpected Token
-
-Line 1:var x : bool = true
-            ^
-
-Error: Unexpected Token
-
-Line 1:var x : bool = true
-              ^
-
-Error: Unexpected Token
-
-Line 1:var x : bool = true
-                   ^
-
-Error: Unexpected Token
-
-Line 1:var x : bool = true
-                     ^
-
-Error: Unexpected Token
-
-
+[ERROR] varStatementWithBoolType  Time elapsed: 0 s  <<< ERROR!
+java.lang.NullPointerException
 	at edu.montana.csci.csci468.parser.CatscriptParserStatementsTest.varStatementWithBoolType(CatscriptParserStatementsTest.java:92)
 
-[ERROR] varStatementWithStringType  Time elapsed: 0 s  <<< ERROR!
-edu.montana.csci.csci468.parser.ParseErrorException: 
-Parse Errors Occurred:
-
-Line 1:var x : string = ""
-      ^
-
-Error: Unexpected Token
-
-Line 1:var x : string = ""
-          ^
-
-Error: Unexpected Token
-
-Line 1:var x : string = ""
-            ^
-
-Error: Unexpected Token
-
-Line 1:var x : string = ""
-              ^
-
-Error: Unexpected Token
-
-Line 1:var x : string = ""
-                     ^
-
-Error: Unexpected Token
-
-Line 1:var x : string = ""
-                        ^
-
-Error: Unexpected Token
-
-
+[ERROR] varStatementWithStringType  Time elapsed: 0.002 s  <<< ERROR!
+java.lang.NullPointerException
 	at edu.montana.csci.csci468.parser.CatscriptParserStatementsTest.varStatementWithStringType(CatscriptParserStatementsTest.java:101)
 
-[ERROR] varStatementWithImplicitType  Time elapsed: 0 s  <<< ERROR!
-edu.montana.csci.csci468.parser.ParseErrorException: 
-Parse Errors Occurred:
-
-Line 1:var x = 10
-      ^
-
-Error: Unexpected Token
-
-Line 1:var x = 10
-          ^
-
-Error: Unexpected Token
-
-Line 1:var x = 10
-            ^
-
-Error: Unexpected Token
-
-Line 1:var x = 10
-              ^
-
-Error: Unexpected Token
-
-
+[ERROR] varStatementWithImplicitType  Time elapsed: 0.001 s  <<< ERROR!
+java.lang.NullPointerException
 	at edu.montana.csci.csci468.parser.CatscriptParserStatementsTest.varStatementWithImplicitType(CatscriptParserStatementsTest.java:75)
 
-[ERROR] forStatementEnsuresClosingBrace  Time elapsed: 0.001 s  <<< ERROR!
-java.lang.ClassCastException: class edu.montana.csci.csci468.parser.statements.SyntaxErrorStatement cannot be cast to class edu.montana.csci.csci468.parser.statements.ForStatement (edu.montana.csci.csci468.parser.statements.SyntaxErrorStatement and edu.montana.csci.csci468.parser.statements.ForStatement are in unnamed module of loader 'app')
-	at edu.montana.csci.csci468.parser.CatscriptParserStatementsTest.forStatementEnsuresClosingBrace(CatscriptParserStatementsTest.java:36)
-
-[ERROR] assigmentStatement  Time elapsed: 0 s  <<< ERROR!
+[ERROR] assigmentStatement  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.ClassCastException: class edu.montana.csci.csci468.parser.statements.SyntaxErrorStatement cannot be cast to class edu.montana.csci.csci468.parser.statements.AssignmentStatement (edu.montana.csci.csci468.parser.statements.SyntaxErrorStatement and edu.montana.csci.csci468.parser.statements.AssignmentStatement are in unnamed module of loader 'app')
 	at edu.montana.csci.csci468.parser.CatscriptParserStatementsTest.assigmentStatement(CatscriptParserStatementsTest.java:128)
 
-[ERROR] functionDefWithParamTypesStatement  Time elapsed: 0.01 s  <<< ERROR!
+[ERROR] functionDefWithParamTypesStatement  Time elapsed: 0.003 s  <<< ERROR!
 edu.montana.csci.csci468.parser.ParseErrorException: 
 Parse Errors Occurred:
 
@@ -427,7 +256,7 @@ Error: Unexpected Token
 
 	at edu.montana.csci.csci468.parser.CatscriptParserStatementsTest.functionDefWithParamTypesStatement(CatscriptParserStatementsTest.java:166)
 
-[ERROR] elseStatementEnsuresClosingBrace  Time elapsed: 0.001 s  <<< ERROR!
+[ERROR] elseStatementEnsuresClosingBrace  Time elapsed: 0.004 s  <<< ERROR!
 java.lang.ClassCastException: class edu.montana.csci.csci468.parser.statements.SyntaxErrorStatement cannot be cast to class edu.montana.csci.csci468.parser.statements.IfStatement (edu.montana.csci.csci468.parser.statements.SyntaxErrorStatement and edu.montana.csci.csci468.parser.statements.IfStatement are in unnamed module of loader 'app')
 	at edu.montana.csci.csci468.parser.CatscriptParserStatementsTest.elseStatementEnsuresClosingBrace(CatscriptParserStatementsTest.java:68)
 
@@ -473,44 +302,11 @@ Error: Unexpected Token
 
 	at edu.montana.csci.csci468.parser.CatscriptParserStatementsTest.returnStatementNoExprInFunction(CatscriptParserStatementsTest.java:180)
 
-[ERROR] varStatementWithIntType  Time elapsed: 0.002 s  <<< ERROR!
-edu.montana.csci.csci468.parser.ParseErrorException: 
-Parse Errors Occurred:
-
-Line 1:var x : int = 10
-      ^
-
-Error: Unexpected Token
-
-Line 1:var x : int = 10
-          ^
-
-Error: Unexpected Token
-
-Line 1:var x : int = 10
-            ^
-
-Error: Unexpected Token
-
-Line 1:var x : int = 10
-              ^
-
-Error: Unexpected Token
-
-Line 1:var x : int = 10
-                  ^
-
-Error: Unexpected Token
-
-Line 1:var x : int = 10
-                    ^
-
-Error: Unexpected Token
-
-
+[ERROR] varStatementWithIntType  Time elapsed: 0 s  <<< ERROR!
+java.lang.NullPointerException
 	at edu.montana.csci.csci468.parser.CatscriptParserStatementsTest.varStatementWithIntType(CatscriptParserStatementsTest.java:83)
 
-[ERROR] returnStatementExprInFunction  Time elapsed: 0.01 s  <<< ERROR!
+[ERROR] returnStatementExprInFunction  Time elapsed: 0.002 s  <<< ERROR!
 edu.montana.csci.csci468.parser.ParseErrorException: 
 Parse Errors Occurred:
 
@@ -567,61 +363,33 @@ Error: Unexpected Token
 
 	at edu.montana.csci.csci468.parser.CatscriptParserStatementsTest.returnStatementExprInFunction(CatscriptParserStatementsTest.java:189)
 
-[ERROR] varStatementWithObjectType  Time elapsed: 0.008 s  <<< ERROR!
-edu.montana.csci.csci468.parser.ParseErrorException: 
-Parse Errors Occurred:
-
-Line 1:var x : object = ""
-      ^
-
-Error: Unexpected Token
-
-Line 1:var x : object = ""
-          ^
-
-Error: Unexpected Token
-
-Line 1:var x : object = ""
-            ^
-
-Error: Unexpected Token
-
-Line 1:var x : object = ""
-              ^
-
-Error: Unexpected Token
-
-Line 1:var x : object = ""
-                     ^
-
-Error: Unexpected Token
-
-Line 1:var x : object = ""
-                        ^
-
-Error: Unexpected Token
-
-
+[ERROR] varStatementWithObjectType  Time elapsed: 0.002 s  <<< ERROR!
+java.lang.NullPointerException
 	at edu.montana.csci.csci468.parser.CatscriptParserStatementsTest.varStatementWithObjectType(CatscriptParserStatementsTest.java:110)
 
-[ERROR] forStatementParses  Time elapsed: 0.003 s  <<< ERROR!
+[ERROR] forStatementParses  Time elapsed: 0.002 s  <<< ERROR!
 edu.montana.csci.csci468.parser.ParseErrorException: 
 Parse Errors Occurred:
 
 Line 1:for(x in [1, 2, 3]){ print(x) }
+               ^
+
+Error: Unexpected Token
+
+Line 1:for(x in [1, 2, 3]){ print(x) }
+               ^
+
+Error: Unexpected Token
+
+Line 1:for(x in [1, 2, 3]){ print(x) }
+                ^
+
+Error: Unexpected Token
+
+Line 1:for(x in [1, 2, 3]){ print(x) }
       ^
 
-Error: Unexpected Token
-
-Line 1:for(x in [1, 2, 3]){ print(x) }
-         ^
-
-Error: Unexpected Token
-
-Line 1:for(x in [1, 2, 3]){ print(x) }
-          ^
-
-Error: Unexpected Token
+Error: Incompatible types
 
 Line 1:for(x in [1, 2, 3]){ print(x) }
             ^
@@ -687,8 +455,8 @@ Error: Unexpected Token
 	at edu.montana.csci.csci468.parser.CatscriptParserStatementsTest.forStatementParses(CatscriptParserStatementsTest.java:27)
 
 [INFO] Running edu.montana.csci.csci468.parser.CatscriptParserTypeCheckingTest
-[ERROR] Tests run: 10, Failures: 2, Errors: 4, Skipped: 0, Time elapsed: 0.002 s <<< FAILURE! - in edu.montana.csci.csci468.parser.CatscriptParserTypeCheckingTest
-[ERROR] functionCallsWorkProperly  Time elapsed: 0 s  <<< ERROR!
+[ERROR] Tests run: 10, Failures: 0, Errors: 6, Skipped: 0, Time elapsed: 0.001 s <<< FAILURE! - in edu.montana.csci.csci468.parser.CatscriptParserTypeCheckingTest
+[ERROR] functionCallsWorkProperly  Time elapsed: 0.001 s  <<< ERROR!
 edu.montana.csci.csci468.parser.ParseErrorException: 
 Parse Errors Occurred:
 
@@ -771,66 +539,15 @@ Error: Unexpected Token
 	at edu.montana.csci.csci468.parser.CatscriptParserTypeCheckingTest.functionCallsWorkProperly(CatscriptParserTypeCheckingTest.java:38)
 
 [ERROR] identifiersWorkProperly  Time elapsed: 0 s  <<< ERROR!
-edu.montana.csci.csci468.parser.ParseErrorException: 
-Parse Errors Occurred:
-
-Line 1:var x = 1 print( x )
-      ^
-
-Error: Unexpected Token
-
-Line 1:var x = 1 print( x )
-          ^
-
-Error: Unexpected Token
-
-Line 1:var x = 1 print( x )
-            ^
-
-Error: Unexpected Token
-
-Line 1:var x = 1 print( x )
-              ^
-
-Error: Unexpected Token
-
-Line 1:var x = 1 print( x )
-                       ^
-
-Error: This symbol is not defined
-
-
+java.lang.NullPointerException
 	at edu.montana.csci.csci468.parser.CatscriptParserTypeCheckingTest.identifiersWorkProperly(CatscriptParserTypeCheckingTest.java:32)
 
 [ERROR] typeInferenceWorksForVars  Time elapsed: 0 s  <<< ERROR!
-edu.montana.csci.csci468.parser.ParseErrorException: 
-Parse Errors Occurred:
-
-Line 1:var x = 10
-      ^
-
-Error: Unexpected Token
-
-Line 1:var x = 10
-          ^
-
-Error: Unexpected Token
-
-Line 1:var x = 10
-            ^
-
-Error: Unexpected Token
-
-Line 1:var x = 10
-              ^
-
-Error: Unexpected Token
-
-
+java.lang.NullPointerException
 	at edu.montana.csci.csci468.parser.CatscriptParserTypeCheckingTest.typeInferenceWorksForVars(CatscriptParserTypeCheckingTest.java:44)
 
-[ERROR] assignmentTypeError  Time elapsed: 0.001 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <Incompatible types> but was: <Unexpected Token>
+[ERROR] assignmentTypeError  Time elapsed: 0 s  <<< ERROR!
+java.lang.NullPointerException
 	at edu.montana.csci.csci468.parser.CatscriptParserTypeCheckingTest.assignmentTypeError(CatscriptParserTypeCheckingTest.java:55)
 
 [ERROR] testBasicExpressionsHaveProperType  Time elapsed: 0 s  <<< ERROR!
@@ -845,109 +562,21 @@ Error: Incompatible types
 
 	at edu.montana.csci.csci468.parser.CatscriptParserTypeCheckingTest.testBasicExpressionsHaveProperType(CatscriptParserTypeCheckingTest.java:22)
 
-[ERROR] varTypeError  Time elapsed: 0 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <Incompatible types> but was: <Unexpected Token>
+[ERROR] varTypeError  Time elapsed: 0 s  <<< ERROR!
+java.lang.NullPointerException
 	at edu.montana.csci.csci468.parser.CatscriptParserTypeCheckingTest.varTypeError(CatscriptParserTypeCheckingTest.java:50)
 
 [INFO] Running edu.montana.csci.csci468.parser.CatscriptParserSymbolCheckingTest
-[ERROR] Tests run: 8, Failures: 6, Errors: 2, Skipped: 0, Time elapsed: 0.029 s <<< FAILURE! - in edu.montana.csci.csci468.parser.CatscriptParserSymbolCheckingTest
-[ERROR] paramsConflictWithGlobalVars  Time elapsed: 0 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <This name is already used in this program> but was: <Unexpected Token>
+[ERROR] Tests run: 8, Failures: 1, Errors: 7, Skipped: 0, Time elapsed: 0.002 s <<< FAILURE! - in edu.montana.csci.csci468.parser.CatscriptParserSymbolCheckingTest
+[ERROR] paramsConflictWithGlobalVars  Time elapsed: 0 s  <<< ERROR!
+java.lang.NullPointerException
 	at edu.montana.csci.csci468.parser.CatscriptParserSymbolCheckingTest.paramsConflictWithGlobalVars(CatscriptParserSymbolCheckingTest.java:46)
 
 [ERROR] ifStatementBranchesDoNotConflic  Time elapsed: 0 s  <<< ERROR!
-edu.montana.csci.csci468.parser.ParseErrorException: 
-Parse Errors Occurred:
-
-Line 1:if(true){ var x = 10 } else { var x = true }
-      ^
-
-Error: Unexpected Token
-
-Line 1:if(true){ var x = 10 } else { var x = true }
-        ^
-
-Error: Unexpected Token
-
-Line 1:if(true){ var x = 10 } else { var x = true }
-         ^
-
-Error: Unexpected Token
-
-Line 1:if(true){ var x = 10 } else { var x = true }
-             ^
-
-Error: Unexpected Token
-
-Line 1:if(true){ var x = 10 } else { var x = true }
-              ^
-
-Error: Unexpected Token
-
-Line 1:if(true){ var x = 10 } else { var x = true }
-                ^
-
-Error: Unexpected Token
-
-Line 1:if(true){ var x = 10 } else { var x = true }
-                    ^
-
-Error: Unexpected Token
-
-Line 1:if(true){ var x = 10 } else { var x = true }
-                      ^
-
-Error: Unexpected Token
-
-Line 1:if(true){ var x = 10 } else { var x = true }
-                        ^
-
-Error: Unexpected Token
-
-Line 1:if(true){ var x = 10 } else { var x = true }
-                           ^
-
-Error: Unexpected Token
-
-Line 1:if(true){ var x = 10 } else { var x = true }
-                             ^
-
-Error: Unexpected Token
-
-Line 1:if(true){ var x = 10 } else { var x = true }
-                                  ^
-
-Error: Unexpected Token
-
-Line 1:if(true){ var x = 10 } else { var x = true }
-                                    ^
-
-Error: Unexpected Token
-
-Line 1:if(true){ var x = 10 } else { var x = true }
-                                        ^
-
-Error: Unexpected Token
-
-Line 1:if(true){ var x = 10 } else { var x = true }
-                                          ^
-
-Error: Unexpected Token
-
-Line 1:if(true){ var x = 10 } else { var x = true }
-                                            ^
-
-Error: Unexpected Token
-
-Line 1:if(true){ var x = 10 } else { var x = true }
-                                                 ^
-
-Error: Unexpected Token
-
-
+java.lang.NullPointerException
 	at edu.montana.csci.csci468.parser.CatscriptParserSymbolCheckingTest.ifStatementBranchesDoNotConflic(CatscriptParserSymbolCheckingTest.java:59)
 
-[ERROR] paramsDoNotConflictWithEachOther  Time elapsed: 0.006 s  <<< ERROR!
+[ERROR] paramsDoNotConflictWithEachOther  Time elapsed: 0.001 s  <<< ERROR!
 edu.montana.csci.csci468.parser.ParseErrorException: 
 Parse Errors Occurred:
 
@@ -1034,29 +663,29 @@ Error: Unexpected Token
 
 	at edu.montana.csci.csci468.parser.CatscriptParserSymbolCheckingTest.paramsDoNotConflictWithEachOther(CatscriptParserSymbolCheckingTest.java:52)
 
-[ERROR] duplicateVarsErrors  Time elapsed: 0.003 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <This name is already used in this program> but was: <Unexpected Token>
+[ERROR] duplicateVarsErrors  Time elapsed: 0 s  <<< ERROR!
+java.lang.NullPointerException
 	at edu.montana.csci.csci468.parser.CatscriptParserSymbolCheckingTest.duplicateVarsErrors(CatscriptParserSymbolCheckingTest.java:16)
 
-[ERROR] functionVarConflict  Time elapsed: 0.002 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <This name is already used in this program> but was: <Unexpected Token>
+[ERROR] functionVarConflict  Time elapsed: 0 s  <<< ERROR!
+java.lang.NullPointerException
 	at edu.montana.csci.csci468.parser.CatscriptParserSymbolCheckingTest.functionVarConflict(CatscriptParserSymbolCheckingTest.java:28)
 
-[ERROR] functionFunctionConflict  Time elapsed: 0.004 s  <<< FAILURE!
+[ERROR] functionFunctionConflict  Time elapsed: 0 s  <<< FAILURE!
 org.opentest4j.AssertionFailedError: expected: <This name is already used in this program> but was: <Unexpected Token>
 	at edu.montana.csci.csci468.parser.CatscriptParserSymbolCheckingTest.functionFunctionConflict(CatscriptParserSymbolCheckingTest.java:34)
 
-[ERROR] varFunctionConflict  Time elapsed: 0.002 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <This name is already used in this program> but was: <Unexpected Token>
+[ERROR] varFunctionConflict  Time elapsed: 0 s  <<< ERROR!
+java.lang.NullPointerException
 	at edu.montana.csci.csci468.parser.CatscriptParserSymbolCheckingTest.varFunctionConflict(CatscriptParserSymbolCheckingTest.java:22)
 
-[ERROR] forVarConflict  Time elapsed: 0.002 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <This name is already used in this program> but was: <Unexpected Token>
+[ERROR] forVarConflict  Time elapsed: 0 s  <<< ERROR!
+java.lang.NullPointerException
 	at edu.montana.csci.csci468.parser.CatscriptParserSymbolCheckingTest.forVarConflict(CatscriptParserSymbolCheckingTest.java:40)
 
 [INFO] Running edu.montana.csci.csci468.eval.CatscriptStatementExecutionTest
-[ERROR] Tests run: 9, Failures: 0, Errors: 9, Skipped: 0, Time elapsed: 0.025 s <<< FAILURE! - in edu.montana.csci.csci468.eval.CatscriptStatementExecutionTest
-[ERROR] recursiveFunctionWorksProperly  Time elapsed: 0 s  <<< ERROR!
+[ERROR] Tests run: 9, Failures: 0, Errors: 9, Skipped: 0, Time elapsed: 0.004 s <<< FAILURE! - in edu.montana.csci.csci468.eval.CatscriptStatementExecutionTest
+[ERROR] recursiveFunctionWorksProperly  Time elapsed: 0.001 s  <<< ERROR!
 edu.montana.csci.csci468.parser.ParseErrorException: 
 Parse Errors Occurred:
 
@@ -1204,140 +833,14 @@ Error: Unexpected Token
 	at edu.montana.csci.csci468.eval.CatscriptStatementExecutionTest.recursiveFunctionWorksProperly(CatscriptStatementExecutionTest.java:75)
 
 [ERROR] localVarStatementsWorkProperly  Time elapsed: 0 s  <<< ERROR!
-edu.montana.csci.csci468.parser.ParseErrorException: 
-Parse Errors Occurred:
-
-Line 1:for( x in [1, 2, 3] ) {
-      ^
-
-Error: Unexpected Token
-
-Line 1:for( x in [1, 2, 3] ) {
-         ^
-
-Error: Unexpected Token
-
-Line 1:for( x in [1, 2, 3] ) {
-           ^
-
-Error: Unexpected Token
-
-Line 1:for( x in [1, 2, 3] ) {
-             ^
-
-Error: Unexpected Token
-
-Line 1:for( x in [1, 2, 3] ) {
-                ^
-
-Error: Unexpected Token
-
-Line 1:for( x in [1, 2, 3] ) {
-                 ^
-
-Error: Unexpected Token
-
-Line 1:for( x in [1, 2, 3] ) {
-                  ^
-
-Error: Unexpected Token
-
-Line 1:for( x in [1, 2, 3] ) {
-                    ^
-
-Error: Unexpected Token
-
-Line 1:for( x in [1, 2, 3] ) {
-                     ^
-
-Error: Unexpected Token
-
-Line 1:for( x in [1, 2, 3] ) {
-                       ^
-
-Error: Unexpected Token
-
-Line 1:for( x in [1, 2, 3] ) {
-                        ^
-
-Error: Unexpected Token
-
-Line 1:for( x in [1, 2, 3] ) {
-                          ^
-
-Error: Unexpected Token
-
-Line 1:for( x in [1, 2, 3] ) {
-                            ^
-
-Error: Unexpected Token
-
-Line 2:  var y = x
-        ^
-
-Error: Unexpected Token
-
-Line 2:  var y = x
-            ^
-
-Error: Unexpected Token
-
-Line 2:  var y = x
-              ^
-
-Error: Unexpected Token
-
-Line 2:  var y = x
-                ^
-
-Error: Unexpected Token
-
-Line 3:  print(y)
-              ^
-
-Error: This symbol is not defined
-
-Line 4:}
-      ^
-
-Error: Unexpected Token
-
-
+java.lang.NullPointerException
 	at edu.montana.csci.csci468.eval.CatscriptStatementExecutionTest.localVarStatementsWorkProperly(CatscriptStatementExecutionTest.java:43)
 
-[ERROR] varStatementWorksProperly  Time elapsed: 0.001 s  <<< ERROR!
-edu.montana.csci.csci468.parser.ParseErrorException: 
-Parse Errors Occurred:
-
-Line 1:var x = 1
-      ^
-
-Error: Unexpected Token
-
-Line 1:var x = 1
-          ^
-
-Error: Unexpected Token
-
-Line 1:var x = 1
-            ^
-
-Error: Unexpected Token
-
-Line 1:var x = 1
-              ^
-
-Error: Unexpected Token
-
-Line 2:print(x)
-            ^
-
-Error: This symbol is not defined
-
-
+[ERROR] varStatementWorksProperly  Time elapsed: 0 s  <<< ERROR!
+java.lang.NullPointerException
 	at edu.montana.csci.csci468.eval.CatscriptStatementExecutionTest.varStatementWorksProperly(CatscriptStatementExecutionTest.java:32)
 
-[ERROR] functionDeclarationWorksProperly  Time elapsed: 0 s  <<< ERROR!
+[ERROR] functionDeclarationWorksProperly  Time elapsed: 0.001 s  <<< ERROR!
 edu.montana.csci.csci468.parser.ParseErrorException: 
 Parse Errors Occurred:
 
@@ -1444,7 +947,7 @@ Error: Unexpected Token
 
 	at edu.montana.csci.csci468.eval.CatscriptStatementExecutionTest.functionDeclarationWorksProperly(CatscriptStatementExecutionTest.java:66)
 
-[ERROR] returnStatementWorks  Time elapsed: 0.004 s  <<< ERROR!
+[ERROR] returnStatementWorks  Time elapsed: 0.001 s  <<< ERROR!
 edu.montana.csci.csci468.parser.ParseErrorException: 
 Parse Errors Occurred:
 
@@ -1556,109 +1059,11 @@ Error: Unexpected Token
 
 	at edu.montana.csci.csci468.eval.CatscriptStatementExecutionTest.returnStatementWorks(CatscriptStatementExecutionTest.java:88)
 
-[ERROR] varInsideFunctionWorksProperly  Time elapsed: 0.002 s  <<< ERROR!
-edu.montana.csci.csci468.parser.ParseErrorException: 
-Parse Errors Occurred:
-
-Line 1:function foo() : int {
-      ^
-
-Error: Unexpected Token
-
-Line 1:function foo() : int {
-               ^
-
-Error: Unexpected Token
-
-Line 1:function foo() : int {
-                  ^
-
-Error: Unexpected Token
-
-Line 1:function foo() : int {
-                   ^
-
-Error: Unexpected Token
-
-Line 1:function foo() : int {
-                     ^
-
-Error: Unexpected Token
-
-Line 1:function foo() : int {
-                       ^
-
-Error: Unexpected Token
-
-Line 1:function foo() : int {
-                           ^
-
-Error: Unexpected Token
-
-Line 2:  var x = 42
-        ^
-
-Error: Unexpected Token
-
-Line 2:  var x = 42
-            ^
-
-Error: Unexpected Token
-
-Line 2:  var x = 42
-              ^
-
-Error: Unexpected Token
-
-Line 2:  var x = 42
-                ^
-
-Error: Unexpected Token
-
-Line 3:  return x
-        ^
-
-Error: Unexpected Token
-
-Line 3:  return x
-               ^
-
-Error: Unexpected Token
-
-Line 4:}
-      ^
-
-Error: Unexpected Token
-
-Line 5:print( foo() )
-                ^
-
-Error: Unexpected Token
-
-Line 5:print( foo() )
-             ^
-
-Error: This symbol is not defined
-
-Line 5:print( foo() )
-                ^
-
-Error: Unexpected Token
-
-Line 5:print( foo() )
-                 ^
-
-Error: Unexpected Token
-
-Line 5:print( foo() )
-                   ^
-
-Error: Unexpected Token
-
-
+[ERROR] varInsideFunctionWorksProperly  Time elapsed: 0 s  <<< ERROR!
+java.lang.NullPointerException
 	at edu.montana.csci.csci468.eval.CatscriptStatementExecutionTest.varInsideFunctionWorksProperly(CatscriptStatementExecutionTest.java:51)
 
-[ERROR] ifStatementWorksProperly  Time elapsed: 0.004 s  <<< ERROR!
+[ERROR] ifStatementWorksProperly  Time elapsed: 0 s  <<< ERROR!
 edu.montana.csci.csci468.parser.ParseErrorException: 
 Parse Errors Occurred:
 
@@ -1695,24 +1100,29 @@ Error: Unexpected Token
 
 	at edu.montana.csci.csci468.eval.CatscriptStatementExecutionTest.ifStatementWorksProperly(CatscriptStatementExecutionTest.java:24)
 
-[ERROR] forStatementWorksProperly  Time elapsed: 0.002 s  <<< ERROR!
+[ERROR] forStatementWorksProperly  Time elapsed: 0.001 s  <<< ERROR!
 edu.montana.csci.csci468.parser.ParseErrorException: 
 Parse Errors Occurred:
 
 Line 1:for(x in [1, 2, 3]) { print(x) }
+               ^
+
+Error: Unexpected Token
+
+Line 1:for(x in [1, 2, 3]) { print(x) }
+               ^
+
+Error: Unexpected Token
+
+Line 1:for(x in [1, 2, 3]) { print(x) }
+                ^
+
+Error: Unexpected Token
+
+Line 1:for(x in [1, 2, 3]) { print(x) }
       ^
 
-Error: Unexpected Token
-
-Line 1:for(x in [1, 2, 3]) { print(x) }
-         ^
-
-Error: Unexpected Token
-
-Line 1:for(x in [1, 2, 3]) { print(x) }
-          ^
-
-Error: Unexpected Token
+Error: Incompatible types
 
 Line 1:for(x in [1, 2, 3]) { print(x) }
             ^
@@ -1777,12 +1187,12 @@ Error: Unexpected Token
 
 	at edu.montana.csci.csci468.eval.CatscriptStatementExecutionTest.forStatementWorksProperly(CatscriptStatementExecutionTest.java:61)
 
-[ERROR] printStatementWorksProperly  Time elapsed: 0.008 s  <<< ERROR!
+[ERROR] printStatementWorksProperly  Time elapsed: 0 s  <<< ERROR!
 java.lang.UnsupportedOperationException: evaluate needs to be implemented for edu.montana.csci.csci468.parser.expressions.BooleanLiteralExpression
 	at edu.montana.csci.csci468.eval.CatscriptStatementExecutionTest.printStatementWorksProperly(CatscriptStatementExecutionTest.java:18)
 
 [INFO] Running edu.montana.csci.csci468.eval.CatscriptFunctionArgsAndReturnEvalTest
-[ERROR] Tests run: 14, Failures: 0, Errors: 14, Skipped: 0, Time elapsed: 0.006 s <<< FAILURE! - in edu.montana.csci.csci468.eval.CatscriptFunctionArgsAndReturnEvalTest
+[ERROR] Tests run: 14, Failures: 0, Errors: 14, Skipped: 0, Time elapsed: 0.005 s <<< FAILURE! - in edu.montana.csci.csci468.eval.CatscriptFunctionArgsAndReturnEvalTest
 [ERROR] listTypeWithComponentTypeArgWorksProperly  Time elapsed: 0.001 s  <<< ERROR!
 edu.montana.csci.csci468.parser.ParseErrorException: 
 Parse Errors Occurred:
@@ -1905,7 +1315,7 @@ Error: Unexpected Token
 
 	at edu.montana.csci.csci468.eval.CatscriptFunctionArgsAndReturnEvalTest.listTypeWithComponentTypeArgWorksProperly(CatscriptFunctionArgsAndReturnEvalTest.java:56)
 
-[ERROR] stringTypeArgWorksProperly  Time elapsed: 0 s  <<< ERROR!
+[ERROR] stringTypeArgWorksProperly  Time elapsed: 0.001 s  <<< ERROR!
 edu.montana.csci.csci468.parser.ParseErrorException: 
 Parse Errors Occurred:
 
@@ -2447,7 +1857,7 @@ Error: Unexpected Token
 
 	at edu.montana.csci.csci468.eval.CatscriptFunctionArgsAndReturnEvalTest.returnListWithComponentTypeWorksProperly(CatscriptFunctionArgsAndReturnEvalTest.java:101)
 
-[ERROR] returnListWorksProperly  Time elapsed: 0.001 s  <<< ERROR!
+[ERROR] returnListWorksProperly  Time elapsed: 0 s  <<< ERROR!
 edu.montana.csci.csci468.parser.ParseErrorException: 
 Parse Errors Occurred:
 
@@ -2637,80 +2047,7 @@ Error: Unexpected Token
 	at edu.montana.csci.csci468.eval.CatscriptFunctionArgsAndReturnEvalTest.objectTypeArgWorksProperly(CatscriptFunctionArgsAndReturnEvalTest.java:26)
 
 [ERROR] voidFunctionWorksProperly  Time elapsed: 0 s  <<< ERROR!
-edu.montana.csci.csci468.parser.ParseErrorException: 
-Parse Errors Occurred:
-
-Line 1:var x = 10
-      ^
-
-Error: Unexpected Token
-
-Line 1:var x = 10
-          ^
-
-Error: Unexpected Token
-
-Line 1:var x = 10
-            ^
-
-Error: Unexpected Token
-
-Line 1:var x = 10
-              ^
-
-Error: Unexpected Token
-
-Line 2:function foo() {}foo()print(x)
-      ^
-
-Error: Unexpected Token
-
-Line 2:function foo() {}foo()print(x)
-               ^
-
-Error: Unexpected Token
-
-Line 2:function foo() {}foo()print(x)
-                  ^
-
-Error: Unexpected Token
-
-Line 2:function foo() {}foo()print(x)
-                   ^
-
-Error: Unexpected Token
-
-Line 2:function foo() {}foo()print(x)
-                     ^
-
-Error: Unexpected Token
-
-Line 2:function foo() {}foo()print(x)
-                      ^
-
-Error: Unexpected Token
-
-Line 2:function foo() {}foo()print(x)
-                       ^
-
-Error: Unexpected Token
-
-Line 2:function foo() {}foo()print(x)
-                          ^
-
-Error: Unexpected Token
-
-Line 2:function foo() {}foo()print(x)
-                           ^
-
-Error: Unexpected Token
-
-Line 2:function foo() {}foo()print(x)
-                                  ^
-
-Error: This symbol is not defined
-
-
+java.lang.NullPointerException
 	at edu.montana.csci.csci468.eval.CatscriptFunctionArgsAndReturnEvalTest.voidFunctionWorksProperly(CatscriptFunctionArgsAndReturnEvalTest.java:12)
 
 [ERROR] listTypeArgWorksProperly  Time elapsed: 0.001 s  <<< ERROR!
@@ -2974,7 +2311,7 @@ Error: Unexpected Token
 
 	at edu.montana.csci.csci468.eval.CatscriptFunctionArgsAndReturnEvalTest.booleanTypeArgWorksProperly(CatscriptFunctionArgsAndReturnEvalTest.java:38)
 
-[ERROR] returnIntWorksProperly  Time elapsed: 0.001 s  <<< ERROR!
+[ERROR] returnIntWorksProperly  Time elapsed: 0 s  <<< ERROR!
 edu.montana.csci.csci468.parser.ParseErrorException: 
 Parse Errors Occurred:
 
@@ -3113,19 +2450,12 @@ Error: Unexpected Token
 	at edu.montana.csci.csci468.eval.CatscriptBasicExpressionEvalTest.parenthesizedExpressionEvaluatesProperly(CatscriptBasicExpressionEvalTest.java:78)
 
 [INFO] Running edu.montana.csci.csci468.tokenizer.CatScriptTokenizerTest
-[INFO] Tests run: 16, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 s - in edu.montana.csci.csci468.tokenizer.CatScriptTokenizerTest
+[INFO] Tests run: 16, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s - in edu.montana.csci.csci468.tokenizer.CatScriptTokenizerTest
 [INFO] 
 [INFO] Results:
 [INFO] 
 [ERROR] Failures: 
-[ERROR]   CatscriptParserSymbolCheckingTest.duplicateVarsErrors:16 expected: <This name is already used in this program> but was: <Unexpected Token>
-[ERROR]   CatscriptParserSymbolCheckingTest.forVarConflict:40 expected: <This name is already used in this program> but was: <Unexpected Token>
 [ERROR]   CatscriptParserSymbolCheckingTest.functionFunctionConflict:34 expected: <This name is already used in this program> but was: <Unexpected Token>
-[ERROR]   CatscriptParserSymbolCheckingTest.functionVarConflict:28 expected: <This name is already used in this program> but was: <Unexpected Token>
-[ERROR]   CatscriptParserSymbolCheckingTest.paramsConflictWithGlobalVars:46 expected: <This name is already used in this program> but was: <Unexpected Token>
-[ERROR]   CatscriptParserSymbolCheckingTest.varFunctionConflict:22 expected: <This name is already used in this program> but was: <Unexpected Token>
-[ERROR]   CatscriptParserTypeCheckingTest.assignmentTypeError:55 expected: <Incompatible types> but was: <Unexpected Token>
-[ERROR]   CatscriptParserTypeCheckingTest.varTypeError:50 expected: <Incompatible types> but was: <Unexpected Token>
 [ERROR] Errors: 
 [ERROR]   CatscriptBasicExpressionEvalTest.additiveStringExpressionEvaluatesProperly:43->CatscriptTestBase.evaluateExpression:95 » ParseError
 [ERROR]   CatscriptBasicExpressionEvalTest.comparisonExpressionEvaluatesProperly:51->CatscriptTestBase.evaluateExpression:96 » UnsupportedOperation
@@ -3147,19 +2477,18 @@ Error: Unexpected Token
 [ERROR]   CatscriptFunctionArgsAndReturnEvalTest.returnListWorksProperly:94->CatscriptTestBase.executeProgram:102 » ParseError
 [ERROR]   CatscriptFunctionArgsAndReturnEvalTest.returnObjectWorksProperly:72->CatscriptTestBase.executeProgram:102 » ParseError
 [ERROR]   CatscriptFunctionArgsAndReturnEvalTest.stringTypeArgWorksProperly:44->CatscriptTestBase.executeProgram:102 » ParseError
-[ERROR]   CatscriptFunctionArgsAndReturnEvalTest.voidFunctionWorksProperly:12->CatscriptTestBase.executeProgram:102 » ParseError
+[ERROR]   CatscriptFunctionArgsAndReturnEvalTest.voidFunctionWorksProperly:12->CatscriptTestBase.executeProgram:102 » NullPointer
 [ERROR]   CatscriptStatementExecutionTest.forStatementWorksProperly:61->CatscriptTestBase.executeProgram:102 » ParseError
 [ERROR]   CatscriptStatementExecutionTest.functionDeclarationWorksProperly:66->CatscriptTestBase.executeProgram:102 » ParseError
 [ERROR]   CatscriptStatementExecutionTest.ifStatementWorksProperly:24->CatscriptTestBase.executeProgram:102 » ParseError
-[ERROR]   CatscriptStatementExecutionTest.localVarStatementsWorkProperly:43->CatscriptTestBase.executeProgram:102 » ParseError
+[ERROR]   CatscriptStatementExecutionTest.localVarStatementsWorkProperly:43->CatscriptTestBase.executeProgram:102 » NullPointer
 [ERROR]   CatscriptStatementExecutionTest.printStatementWorksProperly:18->CatscriptTestBase.executeProgram:103 » UnsupportedOperation
 [ERROR]   CatscriptStatementExecutionTest.recursiveFunctionWorksProperly:75->CatscriptTestBase.executeProgram:102 » ParseError
 [ERROR]   CatscriptStatementExecutionTest.returnStatementWorks:88->CatscriptTestBase.executeProgram:102 » ParseError
-[ERROR]   CatscriptStatementExecutionTest.varInsideFunctionWorksProperly:51->CatscriptTestBase.executeProgram:102 » ParseError
-[ERROR]   CatscriptStatementExecutionTest.varStatementWorksProperly:32->CatscriptTestBase.executeProgram:102 » ParseError
+[ERROR]   CatscriptStatementExecutionTest.varInsideFunctionWorksProperly:51->CatscriptTestBase.executeProgram:102 » NullPointer
+[ERROR]   CatscriptStatementExecutionTest.varStatementWorksProperly:32->CatscriptTestBase.executeProgram:102 » NullPointer
 [ERROR]   CatscriptParserStatementsTest.assigmentStatement:128 ClassCast class edu.monta...
 [ERROR]   CatscriptParserStatementsTest.elseStatementEnsuresClosingBrace:68 ClassCast cl...
-[ERROR]   CatscriptParserStatementsTest.forStatementEnsuresClosingBrace:36 ClassCast cla...
 [ERROR]   CatscriptParserStatementsTest.forStatementParses:27->CatscriptTestBase.parseStatement:41->CatscriptTestBase.parseStatement:45->CatscriptTestBase.parseStatement:56 » ParseError
 [ERROR]   CatscriptParserStatementsTest.functionCallStatement:136 ClassCast class edu.mo...
 [ERROR]   CatscriptParserStatementsTest.functionDefStatement:144->CatscriptTestBase.parseStatement:41->CatscriptTestBase.parseStatement:45->CatscriptTestBase.parseStatement:56 » ParseError
@@ -3170,26 +2499,33 @@ Error: Unexpected Token
 [ERROR]   CatscriptParserStatementsTest.ifStatementWithElseParses:59 ClassCast class edu...
 [ERROR]   CatscriptParserStatementsTest.returnStatementExprInFunction:189->CatscriptTestBase.parseStatement:41->CatscriptTestBase.parseStatement:45->CatscriptTestBase.parseStatement:56 » ParseError
 [ERROR]   CatscriptParserStatementsTest.returnStatementNoExprInFunction:180->CatscriptTestBase.parseStatement:41->CatscriptTestBase.parseStatement:45->CatscriptTestBase.parseStatement:56 » ParseError
-[ERROR]   CatscriptParserStatementsTest.varStatementWithBoolType:92->CatscriptTestBase.parseStatement:41->CatscriptTestBase.parseStatement:45->CatscriptTestBase.parseStatement:56 » ParseError
-[ERROR]   CatscriptParserStatementsTest.varStatementWithImplicitType:75->CatscriptTestBase.parseStatement:41->CatscriptTestBase.parseStatement:45->CatscriptTestBase.parseStatement:56 » ParseError
-[ERROR]   CatscriptParserStatementsTest.varStatementWithIntType:83->CatscriptTestBase.parseStatement:41->CatscriptTestBase.parseStatement:45->CatscriptTestBase.parseStatement:56 » ParseError
-[ERROR]   CatscriptParserStatementsTest.varStatementWithListType:119->CatscriptTestBase.parseStatement:41->CatscriptTestBase.parseStatement:45->CatscriptTestBase.parseStatement:56 » ParseError
-[ERROR]   CatscriptParserStatementsTest.varStatementWithObjectType:110->CatscriptTestBase.parseStatement:41->CatscriptTestBase.parseStatement:45->CatscriptTestBase.parseStatement:56 » ParseError
-[ERROR]   CatscriptParserStatementsTest.varStatementWithStringType:101->CatscriptTestBase.parseStatement:41->CatscriptTestBase.parseStatement:45->CatscriptTestBase.parseStatement:56 » ParseError
-[ERROR]   CatscriptParserSymbolCheckingTest.ifStatementBranchesDoNotConflic:59->CatscriptTestBase.parseStatement:41->CatscriptTestBase.parseStatement:45->CatscriptTestBase.parseStatement:56 » ParseError
+[ERROR]   CatscriptParserStatementsTest.varStatementWithBoolType:92->CatscriptTestBase.parseStatement:41->CatscriptTestBase.parseStatement:45->CatscriptTestBase.parseStatement:56 » NullPointer
+[ERROR]   CatscriptParserStatementsTest.varStatementWithImplicitType:75->CatscriptTestBase.parseStatement:41->CatscriptTestBase.parseStatement:45->CatscriptTestBase.parseStatement:56 » NullPointer
+[ERROR]   CatscriptParserStatementsTest.varStatementWithIntType:83->CatscriptTestBase.parseStatement:41->CatscriptTestBase.parseStatement:45->CatscriptTestBase.parseStatement:56 » NullPointer
+[ERROR]   CatscriptParserStatementsTest.varStatementWithListType:119->CatscriptTestBase.parseStatement:41->CatscriptTestBase.parseStatement:45->CatscriptTestBase.parseStatement:56 » NullPointer
+[ERROR]   CatscriptParserStatementsTest.varStatementWithObjectType:110->CatscriptTestBase.parseStatement:41->CatscriptTestBase.parseStatement:45->CatscriptTestBase.parseStatement:56 » NullPointer
+[ERROR]   CatscriptParserStatementsTest.varStatementWithStringType:101->CatscriptTestBase.parseStatement:41->CatscriptTestBase.parseStatement:45->CatscriptTestBase.parseStatement:56 » NullPointer
+[ERROR]   CatscriptParserSymbolCheckingTest.duplicateVarsErrors:16->CatscriptTestBase.getParseError:85 » NullPointer
+[ERROR]   CatscriptParserSymbolCheckingTest.forVarConflict:40->CatscriptTestBase.getParseError:85 » NullPointer
+[ERROR]   CatscriptParserSymbolCheckingTest.functionVarConflict:28->CatscriptTestBase.getParseError:85 » NullPointer
+[ERROR]   CatscriptParserSymbolCheckingTest.ifStatementBranchesDoNotConflic:59->CatscriptTestBase.parseStatement:41->CatscriptTestBase.parseStatement:45->CatscriptTestBase.parseStatement:56 » NullPointer
+[ERROR]   CatscriptParserSymbolCheckingTest.paramsConflictWithGlobalVars:46->CatscriptTestBase.getParseError:85 » NullPointer
 [ERROR]   CatscriptParserSymbolCheckingTest.paramsDoNotConflictWithEachOther:52->CatscriptTestBase.parseStatement:41->CatscriptTestBase.parseStatement:45->CatscriptTestBase.parseStatement:56 » ParseError
+[ERROR]   CatscriptParserSymbolCheckingTest.varFunctionConflict:22->CatscriptTestBase.getParseError:85 » NullPointer
+[ERROR]   CatscriptParserTypeCheckingTest.assignmentTypeError:55->CatscriptTestBase.getParseError:85 » NullPointer
 [ERROR]   CatscriptParserTypeCheckingTest.functionCallsWorkProperly:38->CatscriptTestBase.parseStatement:49->CatscriptTestBase.parseStatement:56 » ParseError
-[ERROR]   CatscriptParserTypeCheckingTest.identifiersWorkProperly:32->CatscriptTestBase.parseStatement:49->CatscriptTestBase.parseStatement:56 » ParseError
+[ERROR]   CatscriptParserTypeCheckingTest.identifiersWorkProperly:32->CatscriptTestBase.parseStatement:49->CatscriptTestBase.parseStatement:56 » NullPointer
 [ERROR]   CatscriptParserTypeCheckingTest.testBasicExpressionsHaveProperType:22->CatscriptTestBase.parseExpression:28->CatscriptTestBase.parseExpression:35 » ParseError
-[ERROR]   CatscriptParserTypeCheckingTest.typeInferenceWorksForVars:44->CatscriptTestBase.parseStatement:41->CatscriptTestBase.parseStatement:45->CatscriptTestBase.parseStatement:56 » ParseError
+[ERROR]   CatscriptParserTypeCheckingTest.typeInferenceWorksForVars:44->CatscriptTestBase.parseStatement:41->CatscriptTestBase.parseStatement:45->CatscriptTestBase.parseStatement:56 » NullPointer
+[ERROR]   CatscriptParserTypeCheckingTest.varTypeError:50->CatscriptTestBase.getParseError:85 » NullPointer
 [INFO] 
-[ERROR] Tests run: 116, Failures: 8, Errors: 55, Skipped: 0
+[ERROR] Tests run: 116, Failures: 1, Errors: 61, Skipped: 0
 [INFO] 
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  3.566 s
-[INFO] Finished at: 2021-03-12T13:16:15-07:00
+[INFO] Total time:  2.785 s
+[INFO] Finished at: 2021-03-22T13:07:42-06:00
 [INFO] ------------------------------------------------------------------------
 [ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.22.1:test (default-test) on project CSCI_466_Project: There are test failures.
 [ERROR] 
