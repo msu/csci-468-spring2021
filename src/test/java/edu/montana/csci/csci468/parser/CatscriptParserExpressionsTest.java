@@ -121,6 +121,13 @@ public class  CatscriptParserExpressionsTest extends CatscriptTestBase {
     }
 
     @Test
+    public void tim(){
+        AdditiveExpression expression = parseExpression("1 + \"a\"");
+        assertEquals(CatscriptType.INT,expression.getLeftHandSide().getType());
+        assertEquals(CatscriptType.STRING, expression.getRightHandSide().getType());
+    }
+
+    @Test
     public void parseNotUnaryExpression() {
         UnaryExpression expr = parseExpression("not true");
         assertEquals(true, expr.isNot());

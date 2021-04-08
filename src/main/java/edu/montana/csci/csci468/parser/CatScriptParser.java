@@ -99,16 +99,12 @@ public class CatScriptParser {
         require(LEFT_PAREN, functionDefinitionStatement);
         while (!tokens.match(RIGHT_PAREN) && tokens.hasMoreTokens()) {
             String name = require(IDENTIFIER, functionDefinitionStatement).getStringValue();
-            TypeLiteral type = null;
-            if (tokens.matchAndConsume(COLON)) {
-                type = parseTypeLiteral();
-            }
+            TypeLiteral type = (tokens.matchAndConsume(COLON)) ? parseTypeLiteral() : null;
             functionDefinitionStatement.addParameter(name, type);
             tokens.matchAndConsume(COMMA);
         }
         require(RIGHT_PAREN, functionDefinitionStatement);
-        if (tokens.match(COLON)) {
-            tokens.consumeToken();
+        if (tokens.matchAndConsume(COLON)) {
             functionDefinitionStatement.setType(parseTypeLiteral());
         } else {
             TypeLiteral type = new TypeLiteral();
@@ -280,11 +276,11 @@ public class CatScriptParser {
         while (tokens.match(SLASH, STAR)) {
             Token operator = tokens.consumeToken();
             final Expression rightHandSide = parseUnaryExpression();
-            FactorExpression additiveExpression = new FactorExpression(operator, expression, rightHandSide);
-            additiveExpression.setStart(expression.getStart());
-            additiveExpression.setEnd(rightHandSide.getEnd());
-            additiveExpression.setToken(operator);
-            expression = additiveExpression;
+            FactorExpression factorExpression = new FactorExpression(operator, expression, rightHandSide);
+            factorExpression.setStart(expression.getStart());
+            factorExpression.setEnd(rightHandSide.getEnd());
+            factorExpression.setToken(operator);
+            expression = factorExpression;
         }
         return expression;
 

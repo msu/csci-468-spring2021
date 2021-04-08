@@ -79,7 +79,7 @@ public class AdditiveExpression extends Expression {
     public Object evaluate(CatscriptRuntime runtime) {
         if (getType().equals(CatscriptType.STRING)) {
             String leftString = (leftHandSide.getType().equals(CatscriptType.NULL)) ? "null" : leftHandSide.evaluate(runtime).toString();
-            String rightString = (rightHandSide.getType().equals(CatscriptType.NULL)) ? "null" :rightHandSide.evaluate(runtime).toString();
+            String rightString = (rightHandSide.getType().equals(CatscriptType.NULL)) ? "null" : rightHandSide.evaluate(runtime).toString();
             return leftString + rightString;
         } else {
             return (isAdd()) ? (Integer) leftHandSide.evaluate(runtime) + (Integer) rightHandSide.evaluate(runtime) :

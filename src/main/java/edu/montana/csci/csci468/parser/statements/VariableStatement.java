@@ -53,7 +53,6 @@ public class VariableStatement extends Statement {
             } else if (!explicitType.isAssignableFrom(expression.getType())) {
                 addError(ErrorType.INCOMPATIBLE_TYPES);
             }
-
             symbolTable.registerSymbol(variableName, type);
         }
     }
