@@ -71,14 +71,14 @@ function_call_statement = function_call;
 assignment_statement = IDENTIFIER, '=', expression;
 
 function_declaration = 'function', IDENTIFIER, '(', parameter_list, ')' + 
-                       [ ':' + type_expression ] + "{" + { function_body_statement } + "}";
+                       [ ':' + type_expression ], '{',  { function_body_statement },  '}';
 
 function_body_statement = statement |
                           return_statement;
 
 parameter_list = [ parameter, {',' parameter } ];
 
-parameter = identifier [ , ':', type_expression ];
+parameter = IDENTIFIER [ , ':', type_expression ];
 
 return_statement = 'return' [, expression];
 
@@ -103,7 +103,7 @@ function_call = IDENTIFIER, '(', argument_list , ')'
 
 argument_list = [ expression , { ',' , expression } ]
 
-type_expression = 'int' | 'string' | 'bool' | 'object' | 'list', '<' , type_expression, '>'
+type_expression = 'int' | 'string' | 'bool' | 'object' | 'list' [, '<' , type_expression, '>']
 
 ```
 

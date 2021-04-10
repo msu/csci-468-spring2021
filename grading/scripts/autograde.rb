@@ -113,6 +113,15 @@ when "grade"
         push_grading
       end
     end
+  elsif assignment == "eval"
+    for_each_student_dir do |first, last, dir|
+      puts "Grading #{first} #{last} in #{dir}"
+      pull
+      if grading_dir_exist?
+        maven_test("edu.montana.csci.csci468.tokenizer.*Test,edu.montana.csci.csci468.parser.*Test,edu.montana.csci.csci468.eval.*Test", "grading/eval_test.txt")
+        push_grading
+      end
+    end
   else
     puts "Unknown assignment: #{assignment}"
   end

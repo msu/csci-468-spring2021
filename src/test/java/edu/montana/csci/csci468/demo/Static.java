@@ -42,4 +42,5 @@ public class Static {
         System.out.println(((String) x).length());
         System.out.println(((List)x).size());
     }
+
 }

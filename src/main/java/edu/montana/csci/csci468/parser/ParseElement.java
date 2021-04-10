@@ -5,10 +5,14 @@ import edu.montana.csci.csci468.eval.CatscriptRuntime;
 import edu.montana.csci.csci468.parser.statements.CatScriptProgram;
 import edu.montana.csci.csci468.parser.statements.FunctionDefinitionStatement;
 import edu.montana.csci.csci468.tokenizer.Token;
+import org.objectweb.asm.Opcodes;
 
+import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+
+import static edu.montana.csci.csci468.bytecode.ByteCodeGenerator.internalNameFor;
 
 public abstract class ParseElement {
 
@@ -136,11 +140,25 @@ public abstract class ParseElement {
 
 
     protected void box(ByteCodeGenerator code, CatscriptType type) {
-        // TODO - implement
+        if (type.equals(CatscriptType.INT)) {
+            code.addMethodInstruction(Opcodes.INVOKESTATIC, internalNameFor(Integer.class),
+                    "valueOf", "(I)Ljava/lang/Integer;");
+        }
+        if (type.equals(CatscriptType.BOOLEAN)) {
+            code.addMethodInstruction(Opcodes.INVOKESTATIC, internalNameFor(Boolean.class),
+                    "valueOf", "(Z)Ljava/lang/Boolean;");
+        }
     }
 
     protected void unbox(ByteCodeGenerator code, CatscriptType type) {
-        // TODO - implement
+        if (type.equals(CatscriptType.INT)) {
+            code.addMethodInstruction(Opcodes.INVOKEVIRTUAL, internalNameFor(Integer.class),
+                    "intValue", "()I");
+        }
+        if (type.equals(CatscriptType.BOOLEAN)) {
+            code.addMethodInstruction(Opcodes.INVOKEVIRTUAL, internalNameFor(Boolean.class),
+                    "booleanValue", "()Z;");
+        }
     }
 
 
