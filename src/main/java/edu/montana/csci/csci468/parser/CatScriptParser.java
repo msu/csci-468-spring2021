@@ -80,6 +80,9 @@ public class CatScriptParser {
         if (tokens.match(FUNCTION)) {
             return parseFunctionDeclarationStatement();
         }
+        if (tokens.match(RETURN)) {
+            return parseReturnStatement();
+        }
         return new SyntaxErrorStatement(tokens.consumeToken());
     }
 
@@ -89,11 +92,17 @@ public class CatScriptParser {
         if (tokens.hasMoreTokens() && !tokens.match(RIGHT_BRACE)) {
             returnStatement.setExpression(parseExpression());
         }
+        if (tempFunDef != null) {
+            returnStatement.setFunctionDefinition(tempFunDef);
+        }
         return returnStatement;
     }
 
+    FunctionDefinitionStatement tempFunDef = null;
+
     private Statement parseFunctionDeclarationStatement() {
         FunctionDefinitionStatement functionDefinitionStatement = new FunctionDefinitionStatement();
+        tempFunDef = functionDefinitionStatement;
         functionDefinitionStatement.setStart(tokens.consumeToken());
         functionDefinitionStatement.setName(require(IDENTIFIER, functionDefinitionStatement).getStringValue());
         require(LEFT_PAREN, functionDefinitionStatement);
@@ -114,17 +123,11 @@ public class CatScriptParser {
         require(LEFT_BRACE, functionDefinitionStatement);
         List<Statement> body = new LinkedList<>();
         while (tokens.hasMoreTokens() && !tokens.match(RIGHT_BRACE)) {
-            Statement statement;
-            if (tokens.match(RETURN)) {
-                statement = parseReturnStatement();
-                ((ReturnStatement) statement).setFunctionDefinition(functionDefinitionStatement);
-            } else {
-                statement = parseProgramStatement();
-            }
-            body.add(statement);
+            body.add(parseProgramStatement());
         }
         require(RIGHT_BRACE, functionDefinitionStatement);
         functionDefinitionStatement.setBody(body);
+        tempFunDef = null;
         return functionDefinitionStatement;
     }
 
