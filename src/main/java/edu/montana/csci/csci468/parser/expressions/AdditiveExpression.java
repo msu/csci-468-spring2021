@@ -4,11 +4,9 @@ import edu.montana.csci.csci468.bytecode.ByteCodeGenerator;
 import edu.montana.csci.csci468.eval.CatscriptRuntime;
 import edu.montana.csci.csci468.parser.CatscriptType;
 import edu.montana.csci.csci468.parser.ErrorType;
-import edu.montana.csci.csci468.parser.ParseError;
 import edu.montana.csci.csci468.parser.SymbolTable;
 import edu.montana.csci.csci468.tokenizer.Token;
 import edu.montana.csci.csci468.tokenizer.TokenType;
-import jdk.jfr.Category;
 import org.objectweb.asm.Opcodes;
 
 public class AdditiveExpression extends Expression {
@@ -98,11 +96,14 @@ public class AdditiveExpression extends Expression {
     public void compile(ByteCodeGenerator code) {
         getLeftHandSide().compile(code);
         getRightHandSide().compile(code);
-        if (isAdd()) {
-            code.addInstruction(Opcodes.IADD);
+        if (getType() == CatscriptType.INT) {
+            if (isAdd()) {
+                code.addInstruction(Opcodes.IADD);
+            } else {
+                code.addInstruction(Opcodes.ISUB);
+            }
         } else {
-            code.addInstruction(Opcodes.ISUB);
+            getLeftHandSide().compile(code);
         }
     }
-
 }
