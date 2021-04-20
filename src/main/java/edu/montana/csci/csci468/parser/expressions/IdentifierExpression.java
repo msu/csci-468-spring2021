@@ -58,12 +58,15 @@ public class IdentifierExpression extends Expression {
             } else {
                 code.addVarInstruction(Opcodes.ALOAD, integer);
             }
-        }
-        else{
-            if(getType() == CatscriptType.INT || getType() == CatscriptType.BOOLEAN){
+        } else {
+            code.addVarInstruction(Opcodes.ALOAD, 0);
+            if (getType() == CatscriptType.INT) {
                 code.addFieldInstruction(Opcodes.GETFIELD, getName(), "I", code.getProgramInternalName());
-            }
-            else{
+            } else if (getType() == CatscriptType.BOOLEAN) {
+                code.addFieldInstruction(Opcodes.GETFIELD, getName(), "Z", code.getProgramInternalName());
+            } else if (getType() == CatscriptType.NULL) {
+                code.addFieldInstruction(Opcodes.GETFIELD, getName(), "Ljava/lang/Object;", code.getProgramInternalName());
+            } else {
                 code.addMethodInstruction(Opcodes.GETFIELD, getName(), "L" + ByteCodeGenerator.internalNameFor(getType().getJavaType()) + ";", code.getProgramInternalName());
             }
         }

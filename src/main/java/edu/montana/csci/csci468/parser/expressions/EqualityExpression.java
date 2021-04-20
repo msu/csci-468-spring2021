@@ -6,6 +6,8 @@ import edu.montana.csci.csci468.parser.CatscriptType;
 import edu.montana.csci.csci468.parser.SymbolTable;
 import edu.montana.csci.csci468.tokenizer.Token;
 import edu.montana.csci.csci468.tokenizer.TokenType;
+import org.objectweb.asm.Label;
+import org.objectweb.asm.Opcodes;
 
 public class EqualityExpression extends Expression {
 
@@ -71,7 +73,27 @@ public class EqualityExpression extends Expression {
 
     @Override
     public void compile(ByteCodeGenerator code) {
-        super.compile(code);
+        Label then = new Label();
+        Label end = new Label();
+        if(isEqual()){
+            leftHandSide.compile(code);
+            box(code, leftHandSide.getType());
+            rightHandSide.compile(code);
+            box(code, rightHandSide.getType());
+            code.addJumpInstruction(Opcodes.IF_ACMPNE,then);
+        }
+        else{
+            leftHandSide.compile(code);
+            box(code, leftHandSide.getType());
+            rightHandSide.compile(code);
+            box(code, rightHandSide.getType());
+            code.addJumpInstruction(Opcodes.IF_ACMPEQ, then);
+        }
+        code.pushConstantOntoStack(1);
+        code.addJumpInstruction(Opcodes.GOTO, end);
+        code.addLabel(then);
+        code.pushConstantOntoStack(0);
+        code.addLabel(end);
     }
 
 

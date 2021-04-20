@@ -175,9 +175,7 @@ public class FunctionDefinitionStatement extends Statement {
                 code.addVarInstruction(Opcodes.ASTORE, slotforvar);
             }
         }
-        body.forEach(statement -> {
-            statement.compile(code);
-        });
+        body.forEach(statement -> statement.compile(code));
         code.popMethod();
     }
 }

@@ -78,16 +78,24 @@ public class VariableStatement extends Statement {
 
     @Override
     public void compile(ByteCodeGenerator code) {
-        expression.compile(code);
         if (isGlobal()) {
-            if (getType() == CatscriptType.INT || getType() == CatscriptType.BOOLEAN) {
+            code.addVarInstruction(Opcodes.ALOAD, 0);
+            expression.compile(code);
+            if (getType() == CatscriptType.INT) {
                 code.addField(getVariableName(), "I");
                 code.addFieldInstruction(Opcodes.PUTFIELD, getVariableName(), "I", code.getProgramInternalName());
+            } else if (getType() == CatscriptType.BOOLEAN) {
+                code.addField(getVariableName(), "Z");
+                code.addFieldInstruction(Opcodes.PUTFIELD, getVariableName(), "Z", code.getProgramInternalName());
+            } else if (getType() == CatscriptType.NULL) {
+                code.addField(getVariableName(), "Ljava/lang/Object;");
+                code.addFieldInstruction(Opcodes.PUTFIELD, getVariableName(), "Ljava/lang/Object;", code.getProgramInternalName());
             } else {
                 code.addField(getVariableName(), "L" + ByteCodeGenerator.internalNameFor(getType().getJavaType()) + ";");
                 code.addFieldInstruction(Opcodes.PUTFIELD, getVariableName(), "L" + ByteCodeGenerator.internalNameFor(getType().getJavaType()) + ";", code.getProgramInternalName());
             }
         } else {
+            expression.compile(code);
             Integer slotforvar = code.createLocalStorageSlotFor(getVariableName());
             if (getType() == CatscriptType.INT || getType() == CatscriptType.BOOLEAN) {
                 code.addVarInstruction(Opcodes.ISTORE, slotforvar);

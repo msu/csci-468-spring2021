@@ -40,12 +40,15 @@ public class ComparisonExpression extends Expression {
     public boolean isLessThan() {
         return operator.getType().equals(LESS);
     }
+
     public boolean isLessThanOrEqual() {
         return operator.getType().equals(LESS_EQUAL);
     }
+
     public boolean isGreaterThanOrEqual() {
         return operator.getType().equals(GREATER_EQUAL);
     }
+
     public boolean isGreater() {
         return operator.getType().equals(GREATER);
     }
@@ -75,16 +78,16 @@ public class ComparisonExpression extends Expression {
     public Object evaluate(CatscriptRuntime runtime) {
         Integer lhs = (Integer) leftHandSide.evaluate(runtime);
         Integer rhs = (Integer) rightHandSide.evaluate(runtime);
-        if(operator.getStringValue().equals(">")){
+        if (operator.getStringValue().equals(">")) {
             return lhs > rhs;
         }
-        if(operator.getStringValue().equals("<")){
+        if (operator.getStringValue().equals("<")) {
             return lhs < rhs;
         }
-        if(operator.getStringValue().equals(">=")){
+        if (operator.getStringValue().equals(">=")) {
             return lhs >= rhs;
         }
-        if(operator.getStringValue().equals("<=")){
+        if (operator.getStringValue().equals("<=")) {
             return lhs <= rhs;
         }
         return super.evaluate(runtime);
@@ -99,17 +102,25 @@ public class ComparisonExpression extends Expression {
     public void compile(ByteCodeGenerator code) {
         Label then = new Label();
         Label end = new Label();
-        if(isGreater()){
-            leftHandSide.compile(code);
-            rightHandSide.compile(code);
-            code.addJumpInstruction(Opcodes.IFGT, then);
-            code.pushConstantOntoStack(0);
-            box(code, CatscriptType.OBJECT);
-            code.addJumpInstruction(Opcodes.GOTO,end);
+        leftHandSide.compile(code);
+        rightHandSide.compile(code);
+        if (isGreater()) {
+            code.addJumpInstruction(Opcodes.IF_ICMPLE, then);
         }
-        code.addLabel(then);
+        if (isGreaterThanOrEqual()) {
+            code.addJumpInstruction(Opcodes.IF_ICMPLT, then);
+        }
+        if (isLessThan()) {
+            code.addJumpInstruction(Opcodes.IF_ICMPGE, then);
+        }
+        if(isLessThanOrEqual()){
+            code.addJumpInstruction(Opcodes.IF_ICMPGT, then);
+        }
+
         code.pushConstantOntoStack(1);
-        box(code, CatscriptType.OBJECT);
+        code.addJumpInstruction(Opcodes.GOTO, end);
+        code.addLabel(then);
+        code.pushConstantOntoStack(0);
         code.addLabel(end);
     }
 
