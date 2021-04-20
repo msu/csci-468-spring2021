@@ -9,6 +9,8 @@ import edu.montana.csci.csci468.tokenizer.Token;
 import edu.montana.csci.csci468.tokenizer.TokenType;
 import org.objectweb.asm.Opcodes;
 
+import static edu.montana.csci.csci468.bytecode.ByteCodeGenerator.internalNameFor;
+
 public class AdditiveExpression extends Expression {
 
     private final Token operator;
@@ -94,9 +96,9 @@ public class AdditiveExpression extends Expression {
 
     @Override
     public void compile(ByteCodeGenerator code) {
-        getLeftHandSide().compile(code);
-        getRightHandSide().compile(code);
         if (getType() == CatscriptType.INT) {
+            getLeftHandSide().compile(code);
+            getRightHandSide().compile(code);
             if (isAdd()) {
                 code.addInstruction(Opcodes.IADD);
             } else {
@@ -104,6 +106,18 @@ public class AdditiveExpression extends Expression {
             }
         } else {
             getLeftHandSide().compile(code);
+            if (getLeftHandSide().getType() == CatscriptType.INT) {
+                code.addMethodInstruction(Opcodes.INVOKESTATIC, internalNameFor(String.class), "valueOf", "(I)Ljava/lang/String;");
+            } else {
+                code.addMethodInstruction(Opcodes.INVOKESTATIC, internalNameFor(String.class), "valueOf", "(Ljava/lang/Object;)Ljava/lang/String;");
+            }
+            getRightHandSide().compile(code);
+            if (getRightHandSide().getType() == CatscriptType.INT) {
+                code.addMethodInstruction(Opcodes.INVOKESTATIC, internalNameFor(String.class), "valueOf", "(I)Ljava/lang/String;");
+            } else {
+                code.addMethodInstruction(Opcodes.INVOKESTATIC, internalNameFor(String.class), "valueOf", "(Ljava/lang/Object;)Ljava/lang/String;");
+            }
+            code.addMethodInstruction(Opcodes.INVOKEVIRTUAL, internalNameFor(String.class), "concat", "(Ljava/lang/String;)Ljava/lang/String;");
         }
     }
 }

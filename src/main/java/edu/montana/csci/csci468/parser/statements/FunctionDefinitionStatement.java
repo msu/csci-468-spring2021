@@ -7,6 +7,7 @@ import edu.montana.csci.csci468.parser.CatscriptType;
 import edu.montana.csci.csci468.parser.ErrorType;
 import edu.montana.csci.csci468.parser.SymbolTable;
 import edu.montana.csci.csci468.parser.expressions.TypeLiteral;
+import org.objectweb.asm.Opcodes;
 
 import javax.swing.plaf.nimbus.State;
 import java.util.ArrayList;
@@ -165,6 +166,18 @@ public class FunctionDefinitionStatement extends Statement {
 
     @Override
     public void compile(ByteCodeGenerator code) {
-        super.compile(code);
+        code.pushMethod(Opcodes.ACC_PUBLIC, getName(), getDescriptor());
+        for(int i = 0; i < argumentTypes.size(); i++){
+            Integer slotforvar = code.createLocalStorageSlotFor(argumentNames.get(i));
+            if (argumentTypes.get(i) == CatscriptType.INT || argumentTypes.get(i) == CatscriptType.BOOLEAN) {
+                code.addVarInstruction(Opcodes.ISTORE, slotforvar);
+            } else {
+                code.addVarInstruction(Opcodes.ASTORE, slotforvar);
+            }
+        }
+        body.forEach(statement -> {
+            statement.compile(code);
+        });
+        code.popMethod();
     }
 }
