@@ -90,7 +90,6 @@ public class FunctionCallExpression extends Expression {
             if (getProgram().getFunction(name).getParameterType(i) == CatscriptType.OBJECT) {
                 box(code, expression.getType());
             }
-
         }
         String descriptor = getProgram().getFunction(name).getDescriptor();
         code.addMethodInstruction(Opcodes.INVOKEVIRTUAL, code.getProgramInternalName(), getName(), descriptor);
