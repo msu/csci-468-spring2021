@@ -167,15 +167,16 @@ public class FunctionDefinitionStatement extends Statement {
     @Override
     public void compile(ByteCodeGenerator code) {
         code.pushMethod(Opcodes.ACC_PUBLIC, getName(), getDescriptor());
-        for(int i = 0; i < argumentTypes.size(); i++){
-            Integer slotforvar = code.createLocalStorageSlotFor(argumentNames.get(i));
-            if (argumentTypes.get(i) == CatscriptType.INT || argumentTypes.get(i) == CatscriptType.BOOLEAN) {
-                code.addVarInstruction(Opcodes.ISTORE, slotforvar);
-            } else {
-                code.addVarInstruction(Opcodes.ASTORE, slotforvar);
-            }
+        code.addVarInstruction(Opcodes.ALOAD, 0);
+        for (int i = 0; i < argumentTypes.size(); i++) {
+            code.createLocalStorageSlotFor(argumentNames.get(i));
         }
-        body.forEach(statement -> statement.compile(code));
+        body.forEach(statement ->
+                statement.compile(code)
+        );
+        if (getType() == CatscriptType.VOID) {
+            code.addInstruction(Opcodes.RETURN);
+        }
         code.popMethod();
     }
 }

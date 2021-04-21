@@ -50,10 +50,9 @@ public class FunctionCallStatement extends Statement {
 
     @Override
     public void compile(ByteCodeGenerator code) {
-        String descriptor = getProgram().getFunction(getName()).getDescriptor();
-        code.addVarInstruction(Opcodes.ALOAD, 0);
-        expression.getArguments().forEach(expression -> expression.compile(code));
-
-        code.addMethodInstruction(Opcodes.INVOKEVIRTUAL, internalNameFor(CatScriptProgram.class), getName(), descriptor);
+        expression.compile(code);
+        if(getProgram().getFunction(getName()).getType() != CatscriptType.VOID){
+            code.addInstruction(Opcodes.POP);
+        }
     }
 }

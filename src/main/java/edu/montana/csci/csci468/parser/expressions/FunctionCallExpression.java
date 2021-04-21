@@ -6,11 +6,15 @@ import edu.montana.csci.csci468.parser.CatscriptType;
 import edu.montana.csci.csci468.parser.ErrorType;
 import edu.montana.csci.csci468.parser.ParseError;
 import edu.montana.csci.csci468.parser.SymbolTable;
+import edu.montana.csci.csci468.parser.statements.CatScriptProgram;
 import edu.montana.csci.csci468.parser.statements.FunctionDefinitionStatement;
+import org.objectweb.asm.Opcodes;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
+import static edu.montana.csci.csci468.bytecode.ByteCodeGenerator.internalNameFor;
 
 public class FunctionCallExpression extends Expression {
     private final String name;
@@ -79,8 +83,17 @@ public class FunctionCallExpression extends Expression {
 
     @Override
     public void compile(ByteCodeGenerator code) {
+        code.addVarInstruction(Opcodes.ALOAD, 0);
+        for (int i = 0; i < arguments.size(); i++) {
+            Expression expression = arguments.get(i);
+            expression.compile(code);
+            if (getProgram().getFunction(name).getParameterType(i) == CatscriptType.OBJECT) {
+                box(code, expression.getType());
+            }
 
-        super.compile(code);
+        }
+        String descriptor = getProgram().getFunction(name).getDescriptor();
+        code.addMethodInstruction(Opcodes.INVOKEVIRTUAL, code.getProgramInternalName(), getName(), descriptor);
     }
 
 
