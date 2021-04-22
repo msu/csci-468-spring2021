@@ -1,5 +1,8 @@
 package edu.montana.csci.csci468;
 
+import edu.montana.csci.csci468.parser.CatscriptType;
+import edu.montana.csci.csci468.parser.expressions.FunctionCallExpression;
+import edu.montana.csci.csci468.parser.statements.FunctionDefinitionStatement;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -10,20 +13,14 @@ public class PartnersTest extends CatscriptTestBase {
      * A simple test function to return the max value in an integer list
      */
     @Test
-    void findTheMax() {
-        assertEquals("6\ndone\n", executeProgram(
-                "function foo(arg : list<int>): string{" +
-                        "var max = -1" +
-                        "for(i in arg){" +
-                        "if(max < i){" +
-                        "max = i" +
-                        "}" +
-                        "}" +
-                        "print(max)" +
-                        "return \"done\"" +
-                        "}" +
-                        "var mylist = [1,2,3,4,5,6]" +
-                        "print(foo(mylist))"));
+    void testType(){
+        FunctionDefinitionStatement functionDefinitionStatement = parseStatement(
+                "function foo(x : int) : int {\n" +
+                        "return x + 1" +
+                        "}\n" +
+                        "print(foo(9))");
+        assertEquals(CatscriptType.INT, functionDefinitionStatement.getType());
+        assertEquals(CatscriptType.INT, functionDefinitionStatement.getParameterType(0));
     }
 
     /**

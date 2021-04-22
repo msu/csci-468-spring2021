@@ -19,12 +19,13 @@ public enum TokenType {
 
     // keywords
     ELSE, FALSE, FUNCTION, FOR, IF, IN, NOT, NULL,
-    PRINT, RETURN, TRUE, VAR,
+    PRINT, RETURN, TRUE, VAR, RANGE,
 
     ERROR,
     EOF;
 
     public static final Map<String, TokenType> KEYWORDS = new HashMap<>();
+
     static {
         KEYWORDS.put("else", ELSE);
         KEYWORDS.put("false", FALSE);
@@ -38,6 +39,7 @@ public enum TokenType {
         KEYWORDS.put("return", RETURN);
         KEYWORDS.put("true", TRUE);
         KEYWORDS.put("var", VAR);
+        KEYWORDS.put("range", RANGE);
     }
 
 

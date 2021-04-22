@@ -7,6 +7,7 @@ import edu.montana.csci.csci468.parser.ErrorType;
 import edu.montana.csci.csci468.parser.ParseError;
 import edu.montana.csci.csci468.parser.SymbolTable;
 import edu.montana.csci.csci468.parser.expressions.Expression;
+import org.objectweb.asm.Opcodes;
 
 public class AssignmentStatement extends Statement {
     private Expression expression;
@@ -47,7 +48,6 @@ public class AssignmentStatement extends Statement {
     @Override
     public void execute(CatscriptRuntime runtime) {
         runtime.setValue(variableName,expression.evaluate(runtime));
-        //super.execute(runtime);
     }
 
     @Override
@@ -57,6 +57,12 @@ public class AssignmentStatement extends Statement {
 
     @Override
     public void compile(ByteCodeGenerator code) {
-        super.compile(code);
+        expression.compile(code);
+        Integer slotforvar = code.createLocalStorageSlotFor(getVariableName());
+        if (expression.getType() == CatscriptType.INT || expression.getType() == CatscriptType.BOOLEAN) {
+            code.addVarInstruction(Opcodes.ISTORE, slotforvar);
+        } else {
+            code.addVarInstruction(Opcodes.ASTORE, slotforvar);
+        }
     }
 }
