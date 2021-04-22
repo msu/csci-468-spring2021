@@ -87,6 +87,7 @@ public class FunctionCallExpression extends Expression {
         for (int i = 0; i < arguments.size(); i++) {
             Expression expression = arguments.get(i);
             expression.compile(code);
+            System.out.println(getProgram().getFunction(name).getParameterType(i));
             if (getProgram().getFunction(name).getParameterType(i) == CatscriptType.OBJECT) {
                 box(code, expression.getType());
             }

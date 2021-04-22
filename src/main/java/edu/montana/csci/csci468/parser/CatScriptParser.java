@@ -264,7 +264,7 @@ public class CatScriptParser {
         Expression expression = parseFactorExpression();
         while (tokens.match(PLUS, MINUS)) {
             Token operator = tokens.consumeToken();
-            final Expression rightHandSide = parseFactorExpression();
+            Expression rightHandSide = (tokens.matchAndConsume(PLUS, MINUS)) ? new IntegerLiteralExpression("1") : parseFactorExpression();
             AdditiveExpression additiveExpression = new AdditiveExpression(operator, expression, rightHandSide);
             additiveExpression.setStart(expression.getStart());
             additiveExpression.setEnd(rightHandSide.getEnd());
@@ -392,11 +392,11 @@ public class CatScriptParser {
                 }
                 terminated = false;
             }
-            ListLiteralExpression functionCallExpression = new ListLiteralExpression(listArguments);
+            ListLiteralExpression listLiteralExpression = new ListLiteralExpression(listArguments);
             if (!terminated) {
-                require(RIGHT_BRACKET, functionCallExpression, ErrorType.UNTERMINATED_LIST);
+                require(RIGHT_BRACKET, listLiteralExpression, ErrorType.UNTERMINATED_LIST);
             }
-            return functionCallExpression;
+            return listLiteralExpression;
         } else if (tokens.matchAndConsume(LEFT_PAREN)) {
             Expression expression = parseExpression();
             ParenthesizedExpression parenthesizedExpression = new ParenthesizedExpression(expression);

@@ -11,10 +11,8 @@ import org.objectweb.asm.Opcodes;
 import java.util.LinkedList;
 import java.util.List;
 
-import static edu.montana.csci.csci468.bytecode.ByteCodeGenerator.internalNameFor;
-
 public class FunctionCallStatement extends Statement {
-    private FunctionCallExpression expression;
+    private final FunctionCallExpression expression;
 
     public FunctionCallStatement(FunctionCallExpression parseExpression) {
         this.expression = addChild(parseExpression);
