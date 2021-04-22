@@ -90,6 +90,9 @@ public class VariableStatement extends Statement {
             } else if (getType() == CatscriptType.NULL) {
                 code.addField(getVariableName(), "Ljava/lang/Object;");
                 code.addFieldInstruction(Opcodes.PUTFIELD, getVariableName(), "Ljava/lang/Object;", code.getProgramInternalName());
+            } else if (getType() == CatscriptType.STRING) {
+                code.addField(getVariableName(), "Ljava/lang/String;");
+                code.addFieldInstruction(Opcodes.PUTFIELD, getVariableName(), "Ljava/lang/String;", code.getProgramInternalName());
             } else {
                 code.addField(getVariableName(), "L" + ByteCodeGenerator.internalNameFor(getType().getJavaType()) + ";");
                 code.addFieldInstruction(Opcodes.PUTFIELD, getVariableName(), "L" + ByteCodeGenerator.internalNameFor(getType().getJavaType()) + ";", code.getProgramInternalName());

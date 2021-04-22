@@ -66,6 +66,8 @@ public class IdentifierExpression extends Expression {
                 code.addFieldInstruction(Opcodes.GETFIELD, getName(), "Z", code.getProgramInternalName());
             } else if (getType() == CatscriptType.NULL) {
                 code.addFieldInstruction(Opcodes.GETFIELD, getName(), "Ljava/lang/Object;", code.getProgramInternalName());
+            } else if (getType() == CatscriptType.STRING) {
+                code.addFieldInstruction(Opcodes.GETFIELD, getName(), "Ljava/lang/String;", code.getProgramInternalName());
             } else {
                 code.addMethodInstruction(Opcodes.GETFIELD, getName(), "L" + ByteCodeGenerator.internalNameFor(getType().getJavaType()) + ";", code.getProgramInternalName());
             }

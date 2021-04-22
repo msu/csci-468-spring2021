@@ -1,8 +1,9 @@
 package edu.montana.csci.csci468.demo;
 
 public class Scratch {
+    String s = "bacon";
     public void driver(){
-        Object o = test(1,2);
+        System.out.println(s);
     }
 
     public Object test(Object x, int y){

@@ -47,7 +47,7 @@ public class AssignmentStatement extends Statement {
     //==============================================================
     @Override
     public void execute(CatscriptRuntime runtime) {
-        runtime.setValue(variableName,expression.evaluate(runtime));
+        runtime.setValue(variableName, expression.evaluate(runtime));
     }
 
     @Override
@@ -57,12 +57,31 @@ public class AssignmentStatement extends Statement {
 
     @Override
     public void compile(ByteCodeGenerator code) {
-        expression.compile(code);
-        Integer slotforvar = code.createLocalStorageSlotFor(getVariableName());
-        if (expression.getType() == CatscriptType.INT || expression.getType() == CatscriptType.BOOLEAN) {
-            code.addVarInstruction(Opcodes.ISTORE, slotforvar);
+
+        Integer slotforvar = code.resolveLocalStorageSlotFor(getVariableName());
+        if (slotforvar != null) {
+            expression.compile(code);
+            if (expression.getType() == CatscriptType.INT || expression.getType() == CatscriptType.BOOLEAN) {
+                code.addVarInstruction(Opcodes.ISTORE, slotforvar);
+            } else {
+                code.addVarInstruction(Opcodes.ASTORE, slotforvar);
+            }
         } else {
-            code.addVarInstruction(Opcodes.ASTORE, slotforvar);
+            code.addVarInstruction(Opcodes.ALOAD, 0);
+            expression.compile(code);
+            if (expression.getType() == CatscriptType.OBJECT) {
+                box(code, expression.getType());
+            }
+            if (expression.getType() == CatscriptType.INT) {
+                code.addFieldInstruction(Opcodes.PUTFIELD, getVariableName(), "I", code.getProgramInternalName());
+            } else if (expression.getType() == CatscriptType.BOOLEAN) {
+                code.addFieldInstruction(Opcodes.PUTFIELD, getVariableName(), "Z", code.getProgramInternalName());
+            } else if (expression.getType() == CatscriptType.NULL) {
+                code.addFieldInstruction(Opcodes.PUTFIELD, getVariableName(), "Ljava/lang/Object;", code.getProgramInternalName());
+            } else {
+                code.addFieldInstruction(Opcodes.PUTFIELD, getVariableName(), "L" + ByteCodeGenerator.internalNameFor(
+                        expression.getType().getJavaType()) + ";", code.getProgramInternalName());
+            }
         }
     }
 }
