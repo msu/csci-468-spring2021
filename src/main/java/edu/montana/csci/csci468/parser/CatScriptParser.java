@@ -497,6 +497,9 @@ public class CatScriptParser {
             }
             if (tokens.match(LEFT_BRACKET)) {
                 return parseIndexExpression(token);
+            }
+            if (tokens.match(QUESTION)) {
+                return parseNullCheckExpression(token);
             } else {
                 IdentifierExpression identifierExpression = new IdentifierExpression(token.getStringValue());
                 identifierExpression.setToken(token);
@@ -544,6 +547,14 @@ public class CatScriptParser {
             return parenthesizedExpression;
         }
         return new SyntaxErrorExpression(tokens.consumeToken());
+    }
+
+    private Expression parseNullCheckExpression(Token variableName) {
+        NullCheckExpression nullCheckExpression = new NullCheckExpression();
+        nullCheckExpression.setVariable(variableName);
+        nullCheckExpression.setStart(variableName);
+        nullCheckExpression.setEnd(tokens.consumeToken());
+        return nullCheckExpression;
     }
 
     private Expression parseIndexExpression(Token variableName) {
