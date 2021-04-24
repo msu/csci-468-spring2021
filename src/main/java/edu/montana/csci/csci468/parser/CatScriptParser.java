@@ -95,7 +95,49 @@ public class CatScriptParser {
         if (tokens.match(DO)) {
             return parseDoWhileStatement();
         }
+        if (tokens.match(SWITCH)) {
+            return parseSwitchStatement();
+        }
+        if (tokens.match(IS, DEFAULT)) {
+            return parseIsStatement();
+        }
         return new SyntaxErrorStatement(tokens.consumeToken());
+    }
+
+    private Statement parseSwitchStatement() {
+        SwitchStatement switchstatement = new SwitchStatement();
+        switchstatement.setStart(tokens.consumeToken());
+        require(LEFT_PAREN, switchstatement);
+        Expression expression = parseExpression();
+        switchstatement.setExpression(expression);
+        switchstatement.setType(expression.getType());
+        require(RIGHT_PAREN, switchstatement);
+        require(LEFT_BRACE, switchstatement);
+        List<Statement> body = new ArrayList<>();
+        while (!tokens.match(RIGHT_BRACE) && tokens.hasMoreTokens()) {
+            body.add(parseProgramStatement());
+        }
+        switchstatement.setIsStatements(body);
+        require(RIGHT_BRACE, switchstatement);
+        return switchstatement;
+    }
+
+    private Statement parseIsStatement() {
+        IsStatement isStatement = new IsStatement();
+        isStatement.setStart(tokens.consumeToken());
+        if (!isStatement.isDefault()) {
+            require(LEFT_PAREN, isStatement);
+            isStatement.setExpression(parseExpression());
+            require(RIGHT_PAREN, isStatement);
+        }
+        require(LEFT_BRACE, isStatement);
+        List<Statement> body = new ArrayList<>();
+        while (!tokens.match(RIGHT_BRACE) && tokens.hasMoreTokens()) {
+            body.add(parseProgramStatement());
+        }
+        require(RIGHT_BRACE, isStatement);
+        isStatement.setTrueStatements(body);
+        return isStatement;
     }
 
     private Statement parseDoWhileStatement() {
