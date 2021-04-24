@@ -413,7 +413,7 @@ public class CatScriptParser {
 
     private Expression parseFactorExpression() {
         Expression expression = parseUnaryExpression();
-        while (tokens.match(SLASH, STAR, MOD)) {
+        while (tokens.match(SLASH, STAR, MOD, OR, AND)) {
             Token operator = tokens.consumeToken();
             final Expression rightHandSide = parseUnaryExpression();
             FactorExpression factorExpression = new FactorExpression(operator, expression, rightHandSide);

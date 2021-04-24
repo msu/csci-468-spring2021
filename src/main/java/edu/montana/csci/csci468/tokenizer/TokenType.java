@@ -22,6 +22,8 @@ public enum TokenType {
     PRINT, RETURN, TRUE, VAR, RANGE,
     WHILE, BREAK, CONTINUE, DO, SWITCH, IS, DEFAULT, QUESTION,
 
+    AND, OR,
+
     ERROR,
     EOF;
 
@@ -48,6 +50,8 @@ public enum TokenType {
         KEYWORDS.put("is", IS);
         KEYWORDS.put("switch", SWITCH);
         KEYWORDS.put("default", DEFAULT);
+        KEYWORDS.put("and", AND);
+        KEYWORDS.put("or", OR);
     }
 
 
