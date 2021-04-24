@@ -83,8 +83,42 @@ public class CatScriptParser {
         if (tokens.match(RETURN)) {
             return parseReturnStatement();
         }
+        if (tokens.match(WHILE)) {
+            return parseWhileStatement();
+        }
+        if (tokens.match(BREAK)) {
+            return parseBreakStatement();
+        }
         return new SyntaxErrorStatement(tokens.consumeToken());
     }
+
+    private Statement parseBreakStatement() {
+        BreakStatement breakStatement = new BreakStatement();
+        breakStatement.setStart(tokens.consumeToken());
+        breakStatement.setWhileStatement(currentWhileStatement);
+        return breakStatement;
+    }
+
+    WhileStatement currentWhileStatement = null;
+
+    private Statement parseWhileStatement() {
+        WhileStatement whileStatement = new WhileStatement();
+        currentWhileStatement = whileStatement;
+        whileStatement.setStart(tokens.consumeToken());
+        require(LEFT_PAREN, whileStatement);
+        whileStatement.setExpression(parseExpression());
+        require(RIGHT_PAREN, whileStatement);
+        require(LEFT_BRACE, whileStatement);
+        List<Statement> body = new LinkedList<>();
+        while (!tokens.match(RIGHT_BRACE) && tokens.hasMoreTokens()) {
+            body.add(parseProgramStatement());
+        }
+        require(RIGHT_BRACE, whileStatement);
+        currentWhileStatement = null;
+        whileStatement.setBody(body);
+        return whileStatement;
+    }
+
 
     private Statement parseReturnStatement() {
         ReturnStatement returnStatement = new ReturnStatement();
