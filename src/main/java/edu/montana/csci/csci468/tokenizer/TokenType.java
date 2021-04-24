@@ -21,6 +21,8 @@ public enum TokenType {
     ELSE, FALSE, FUNCTION, FOR, IF, IN, NOT, NULL,
     PRINT, RETURN, TRUE, VAR, RANGE,
 
+    WHILE,BREAK,
+
     ERROR,
     EOF;
 
@@ -40,6 +42,8 @@ public enum TokenType {
         KEYWORDS.put("true", TRUE);
         KEYWORDS.put("var", VAR);
         KEYWORDS.put("range", RANGE);
+        KEYWORDS.put("while", WHILE);
+        KEYWORDS.put("break", BREAK);
     }
 
 
