@@ -34,6 +34,10 @@ public class FactorExpression extends Expression {
         return operator.getType() == TokenType.STAR;
     }
 
+    public boolean isMod() {
+        return operator.getType() == TokenType.MOD;
+    }
+
     @Override
     public String toString() {
         return super.toString() + "[" + operator.getStringValue() + "]";
@@ -64,10 +68,12 @@ public class FactorExpression extends Expression {
     public Object evaluate(CatscriptRuntime runtime) {
         Integer rhs = (Integer) rightHandSide.evaluate(runtime);
         Integer lhs = (Integer) leftHandSide.evaluate(runtime);
-        if(this.isMultiply()){
+        if (this.isMultiply()) {
             return lhs * rhs;
         }
-        else {
+        if (this.isMod()) {
+            return lhs % rhs;
+        } else {
             return lhs / rhs;
         }
     }
@@ -81,10 +87,9 @@ public class FactorExpression extends Expression {
     public void compile(ByteCodeGenerator code) {
         getLeftHandSide().compile(code);
         getRightHandSide().compile(code);
-        if(isMultiply()){
+        if (isMultiply()) {
             code.addInstruction(Opcodes.IMUL);
-        }
-        else{
+        } else {
             code.addInstruction(Opcodes.IDIV);
         }
     }

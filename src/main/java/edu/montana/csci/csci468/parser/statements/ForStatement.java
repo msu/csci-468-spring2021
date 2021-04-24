@@ -1,12 +1,16 @@
 package edu.montana.csci.csci468.parser.statements;
 
 import edu.montana.csci.csci468.bytecode.ByteCodeGenerator;
+import edu.montana.csci.csci468.eval.BreakExeption;
 import edu.montana.csci.csci468.eval.CatscriptRuntime;
+import edu.montana.csci.csci468.eval.ContinueException;
 import edu.montana.csci.csci468.parser.CatscriptType;
 import edu.montana.csci.csci468.parser.ErrorType;
 import edu.montana.csci.csci468.parser.ParseError;
 import edu.montana.csci.csci468.parser.SymbolTable;
 import edu.montana.csci.csci468.parser.expressions.Expression;
+import edu.montana.csci.csci468.parser.expressions.IntegerLiteralExpression;
+import edu.montana.csci.csci468.parser.expressions.RangeExpression;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.Opcodes;
 
@@ -57,11 +61,15 @@ public class ForStatement extends Statement {
         } else {
             expression.validate(symbolTable);
             CatscriptType type = expression.getType();
-            if (type instanceof CatscriptType.ListType) {
-                symbolTable.registerSymbol(variableName, getComponentType());
+            if (expression instanceof RangeExpression) {
+                symbolTable.registerSymbol(variableName, CatscriptType.INT);
             } else {
-                addError(ErrorType.INCOMPATIBLE_TYPES, getStart());
-                symbolTable.registerSymbol(variableName, CatscriptType.OBJECT);
+                if (type instanceof CatscriptType.ListType) {
+                    symbolTable.registerSymbol(variableName, getComponentType());
+                } else {
+                    addError(ErrorType.INCOMPATIBLE_TYPES, getStart());
+                    symbolTable.registerSymbol(variableName, CatscriptType.OBJECT);
+                }
             }
         }
         for (Statement statement : body) {
@@ -72,6 +80,9 @@ public class ForStatement extends Statement {
     }
 
     private CatscriptType getComponentType() {
+        if (expression instanceof IntegerLiteralExpression) {
+            return CatscriptType.INT;
+        }
         return ((CatscriptType.ListType) expression.getType()).getComponentType();
     }
 
@@ -81,11 +92,33 @@ public class ForStatement extends Statement {
     @Override
     public void execute(CatscriptRuntime runtime) {
         runtime.pushScope();
-        List values = (List) expression.evaluate(runtime);
-        for (Object value : values) {
-            runtime.setValue(variableName, value);
-            for (Statement statement : body) {
-                statement.execute(runtime);
+        if (expression instanceof RangeExpression) {
+            Integer integer = (Integer) expression.evaluate(runtime);
+            for (int x = 0; x < integer; x++) {
+                try {
+                    runtime.setValue(variableName, x);
+                    for (Statement statement : body) {
+                        statement.execute(runtime);
+                    }
+                } catch (BreakExeption b){
+                    break;
+                } catch (ContinueException ignored){
+
+                }
+            }
+        } else {
+            List values = (List) expression.evaluate(runtime);
+            for (Object value : values) {
+                try {
+                    runtime.setValue(variableName, value);
+                    for (Statement statement : body) {
+                        statement.execute(runtime);
+                    }
+                } catch (BreakExeption b) {
+                    break;
+                } catch (ContinueException ignored){
+
+                }
             }
         }
         runtime.popScope();
@@ -120,14 +153,13 @@ public class ForStatement extends Statement {
         unbox(code, componentType);
 
         Integer iteratorvariableslot = code.createLocalStorageSlotFor(variableName);
-        if(componentType.equals(CatscriptType.INT)  || componentType.equals(CatscriptType.BOOLEAN)){
+        if (componentType.equals(CatscriptType.INT) || componentType.equals(CatscriptType.BOOLEAN)) {
             code.addVarInstruction(Opcodes.ISTORE, iteratorvariableslot);
-        }
-        else{
+        } else {
             code.addVarInstruction(Opcodes.ASTORE, iteratorvariableslot);
         }
 
-        for(Statement statement: body){
+        for (Statement statement : body) {
             statement.compile(code);
         }
 

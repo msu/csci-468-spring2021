@@ -8,7 +8,7 @@ public enum TokenType {
     LEFT_PAREN, RIGHT_PAREN,
     LEFT_BRACE, RIGHT_BRACE,
     LEFT_BRACKET, RIGHT_BRACKET,
-    COLON, COMMA, DOT, MINUS, PLUS, SLASH, STAR,
+    COLON, COMMA, DOT, MINUS, PLUS, SLASH, STAR, MOD,
     BANG_EQUAL,
     EQUAL, EQUAL_EQUAL,
     GREATER, GREATER_EQUAL,
@@ -21,12 +21,13 @@ public enum TokenType {
     ELSE, FALSE, FUNCTION, FOR, IF, IN, NOT, NULL,
     PRINT, RETURN, TRUE, VAR, RANGE,
 
-    WHILE,BREAK,
+    WHILE, BREAK, CONTINUE,
 
     ERROR,
     EOF;
 
     public static final Map<String, TokenType> KEYWORDS = new HashMap<>();
+
 
     static {
         KEYWORDS.put("else", ELSE);
@@ -44,6 +45,7 @@ public enum TokenType {
         KEYWORDS.put("range", RANGE);
         KEYWORDS.put("while", WHILE);
         KEYWORDS.put("break", BREAK);
+        KEYWORDS.put("continue", CONTINUE);
     }
 
 

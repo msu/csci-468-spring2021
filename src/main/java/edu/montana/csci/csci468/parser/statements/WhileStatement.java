@@ -3,6 +3,7 @@ package edu.montana.csci.csci468.parser.statements;
 import edu.montana.csci.csci468.bytecode.ByteCodeGenerator;
 import edu.montana.csci.csci468.eval.BreakExeption;
 import edu.montana.csci.csci468.eval.CatscriptRuntime;
+import edu.montana.csci.csci468.eval.ContinueException;
 import edu.montana.csci.csci468.parser.CatscriptType;
 import edu.montana.csci.csci468.parser.ErrorType;
 import edu.montana.csci.csci468.parser.SymbolTable;
@@ -46,7 +47,9 @@ public class WhileStatement extends Statement {
     public void validate(SymbolTable symbolTable) {
         symbolTable.pushScope();
         expression.validate(symbolTable);
-        if (!(expression instanceof EqualityExpression || expression instanceof BooleanLiteralExpression || expression instanceof ComparisonExpression)) {
+        if (!(expression instanceof EqualityExpression ||
+                expression instanceof BooleanLiteralExpression ||
+                expression instanceof ComparisonExpression)) {
             addError(ErrorType.INCOMPATIBLE_TYPES);
         }
 
@@ -67,13 +70,14 @@ public class WhileStatement extends Statement {
     @Override
     public void execute(CatscriptRuntime runtime) {
         runtime.pushScope();
-        while (!(Boolean) expression.evaluate(runtime)) {
+        while ((Boolean) expression.evaluate(runtime)) {
             try {
                 for (Statement statement : body) {
                     statement.execute(runtime);
                 }
             } catch (BreakExeption b) {
                 break;
+            } catch (ContinueException ignored) {
             }
         }
         runtime.popScope();
