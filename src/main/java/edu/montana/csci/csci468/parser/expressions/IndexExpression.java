@@ -6,7 +6,6 @@ import edu.montana.csci.csci468.parser.CatscriptType;
 import edu.montana.csci.csci468.parser.SymbolTable;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class IndexExpression extends Expression {
     private String variableName;
@@ -50,10 +49,6 @@ public class IndexExpression extends Expression {
     @Override
     public void compile(ByteCodeGenerator code) {
 
-    }
-
-    public String getVariableName() {
-        return variableName;
     }
 
     public void setVariableName(String variableName) {

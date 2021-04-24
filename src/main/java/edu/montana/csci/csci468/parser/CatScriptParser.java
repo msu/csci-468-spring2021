@@ -124,8 +124,10 @@ public class CatScriptParser {
 
     private Statement parseIsStatement() {
         IsStatement isStatement = new IsStatement();
-        isStatement.setStart(tokens.consumeToken());
-        if (!isStatement.isDefault()) {
+        isStatement.setToken(tokens.consumeToken());
+        if (isStatement.isDefault()) {
+            String s = "test";
+        } else {
             require(LEFT_PAREN, isStatement);
             isStatement.setExpression(parseExpression());
             require(RIGHT_PAREN, isStatement);

@@ -49,7 +49,7 @@ public enum TokenType {
         KEYWORDS.put("do", DO);
         KEYWORDS.put("is", IS);
         KEYWORDS.put("switch", SWITCH);
-        KEYWORDS.put("default", DEFAULT);
+        KEYWORDS.put("def", DEFAULT);
         KEYWORDS.put("and", AND);
         KEYWORDS.put("or", OR);
     }

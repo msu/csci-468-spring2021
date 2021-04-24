@@ -4,6 +4,7 @@ import edu.montana.csci.csci468.bytecode.ByteCodeGenerator;
 import edu.montana.csci.csci468.eval.CatscriptRuntime;
 import edu.montana.csci.csci468.parser.SymbolTable;
 import edu.montana.csci.csci468.parser.expressions.Expression;
+import edu.montana.csci.csci468.tokenizer.Token;
 import edu.montana.csci.csci468.tokenizer.TokenType;
 
 import java.util.Collections;
@@ -12,10 +13,11 @@ import java.util.List;
 
 public class IsStatement extends Statement {
     private Expression expression;
+    private Token token;
     private List<Statement> trueStatements = Collections.emptyList();
 
     public boolean isDefault() {
-        return getStart().getType().equals(TokenType.DEFAULT);
+        return token.getType().equals(TokenType.DEFAULT);
     }
 
     public Expression getExpression() {
@@ -58,5 +60,10 @@ public class IsStatement extends Statement {
     @Override
     public void compile(ByteCodeGenerator code) {
 
+    }
+
+    @Override
+    public void setToken(Token token) {
+        this.token = token;
     }
 }
