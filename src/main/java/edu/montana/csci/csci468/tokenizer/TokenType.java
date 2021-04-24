@@ -20,14 +20,12 @@ public enum TokenType {
     // keywords
     ELSE, FALSE, FUNCTION, FOR, IF, IN, NOT, NULL,
     PRINT, RETURN, TRUE, VAR, RANGE,
-
     WHILE, BREAK, CONTINUE,
 
     ERROR,
     EOF;
 
     public static final Map<String, TokenType> KEYWORDS = new HashMap<>();
-
 
     static {
         KEYWORDS.put("else", ELSE);
