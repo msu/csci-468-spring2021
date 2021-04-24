@@ -3,14 +3,11 @@ package edu.montana.csci.csci468.parser.statements;
 import edu.montana.csci.csci468.bytecode.ByteCodeGenerator;
 import edu.montana.csci.csci468.eval.BreakExeption;
 import edu.montana.csci.csci468.eval.CatscriptRuntime;
-import edu.montana.csci.csci468.eval.ReturnException;
-import edu.montana.csci.csci468.parser.CatscriptType;
+import edu.montana.csci.csci468.eval.ContinueException;
 import edu.montana.csci.csci468.parser.ErrorType;
 import edu.montana.csci.csci468.parser.SymbolTable;
-import edu.montana.csci.csci468.parser.expressions.Expression;
-import org.objectweb.asm.Opcodes;
 
-public class BreakStatement extends Statement {
+public class ContinueStatement extends Statement {
 
     private Statement parentLoop;
 
@@ -30,7 +27,7 @@ public class BreakStatement extends Statement {
     //==============================================================
     @Override
     public void execute(CatscriptRuntime runtime) {
-        throw new BreakExeption();
+        throw new ContinueException();
     }
 
     @Override

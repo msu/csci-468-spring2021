@@ -89,13 +89,31 @@ public class CatScriptParser {
         if (tokens.match(BREAK)) {
             return parseBreakStatement();
         }
+        if (tokens.match(CONTINUE)) {
+            return parseContinueStatement();
+        }
         return new SyntaxErrorStatement(tokens.consumeToken());
+    }
+
+    private Statement parseContinueStatement() {
+        ContinueStatement continueStatement = new ContinueStatement();
+        continueStatement.setStart(tokens.consumeToken());
+        if (currentForStatement != null) {
+            continueStatement.setParentLoop(currentForStatement);
+        } else if (currentWhileStatement != null) {
+            continueStatement.setParentLoop(currentWhileStatement);
+        }
+        return continueStatement;
     }
 
     private Statement parseBreakStatement() {
         BreakStatement breakStatement = new BreakStatement();
         breakStatement.setStart(tokens.consumeToken());
-        breakStatement.setWhileStatement(currentWhileStatement);
+        if (currentForStatement != null) {
+            breakStatement.setParentLoop(currentForStatement);
+        } else if (currentWhileStatement != null) {
+            breakStatement.setParentLoop(currentWhileStatement);
+        }
         return breakStatement;
     }
 
@@ -216,8 +234,11 @@ public class CatScriptParser {
         return ifStatement;
     }
 
+    ForStatement currentForStatement = new ForStatement();
+
     private Statement parseForStatement() {
         ForStatement forStatement = new ForStatement();
+        currentForStatement = forStatement;
         forStatement.setStart(tokens.consumeToken());
         require(LEFT_PAREN, forStatement);
         if (tokens.match(IDENTIFIER)) {
@@ -235,6 +256,7 @@ public class CatScriptParser {
         forStatement.setBody(statements);
         forStatement.setEnd(tokens.getCurrentToken());
         require(RIGHT_BRACE, forStatement);
+        currentForStatement = null;
         return forStatement;
     }
 
@@ -291,7 +313,19 @@ public class CatScriptParser {
     //============================================================
 
     private Expression parseExpression() {
+        if (tokens.match(RANGE)) {
+            return parseRangeExpression();
+        }
         return parseEqualityExpression();
+    }
+
+    private Expression parseRangeExpression() {
+        RangeExpression rangeExpression = new RangeExpression();
+        rangeExpression.setStart(tokens.consumeToken());
+        require(LEFT_PAREN, rangeExpression);
+        rangeExpression.setExpression(parseExpression());
+        require(RIGHT_PAREN, rangeExpression);
+        return rangeExpression;
     }
 
     private Expression parseAdditiveExpression() {
@@ -310,7 +344,7 @@ public class CatScriptParser {
 
     private Expression parseFactorExpression() {
         Expression expression = parseUnaryExpression();
-        while (tokens.match(SLASH, STAR)) {
+        while (tokens.match(SLASH, STAR, MOD)) {
             Token operator = tokens.consumeToken();
             final Expression rightHandSide = parseUnaryExpression();
             FactorExpression factorExpression = new FactorExpression(operator, expression, rightHandSide);
@@ -391,6 +425,9 @@ public class CatScriptParser {
             token = tokens.consumeToken();
             if (tokens.match(LEFT_PAREN)) {
                 return parseFunctionExpression(token);
+            }
+            if (tokens.match(LEFT_BRACKET)) {
+                return parseIndexExpression(token);
             } else {
                 IdentifierExpression identifierExpression = new IdentifierExpression(token.getStringValue());
                 identifierExpression.setToken(token);
@@ -438,6 +475,15 @@ public class CatScriptParser {
             return parenthesizedExpression;
         }
         return new SyntaxErrorExpression(tokens.consumeToken());
+    }
+
+    private Expression parseIndexExpression(Token variableName) {
+        IndexExpression indexExpression = new IndexExpression();
+        indexExpression.setStart(tokens.consumeToken());
+        indexExpression.setVariableName(variableName.getStringValue());
+        indexExpression.setExpression(parseExpression());
+        require(RIGHT_BRACKET, indexExpression);
+        return indexExpression;
     }
 
 
