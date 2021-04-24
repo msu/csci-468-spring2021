@@ -92,7 +92,29 @@ public class CatScriptParser {
         if (tokens.match(CONTINUE)) {
             return parseContinueStatement();
         }
+        if (tokens.match(DO)) {
+            return parseDoWhileStatement();
+        }
         return new SyntaxErrorStatement(tokens.consumeToken());
+    }
+
+    private Statement parseDoWhileStatement() {
+        DoWhileStatement dowhileStatement = new DoWhileStatement();
+        currentWhileStatement = dowhileStatement;
+        dowhileStatement.setStart(tokens.consumeToken());
+        require(LEFT_BRACE, dowhileStatement);
+        List<Statement> body = new ArrayList<>();
+        while (!tokens.match(RIGHT_BRACE) && tokens.hasMoreTokens()) {
+            body.add(parseProgramStatement());
+        }
+        require(RIGHT_BRACE, dowhileStatement);
+        require(WHILE, dowhileStatement);
+        require(LEFT_PAREN, dowhileStatement);
+        dowhileStatement.setExpression(parseExpression());
+        require(RIGHT_PAREN, dowhileStatement);
+        currentWhileStatement = null;
+        dowhileStatement.setBody(body);
+        return dowhileStatement;
     }
 
     private Statement parseContinueStatement() {
@@ -117,7 +139,7 @@ public class CatScriptParser {
         return breakStatement;
     }
 
-    WhileStatement currentWhileStatement = null;
+    Statement currentWhileStatement = null;
 
     private Statement parseWhileStatement() {
         WhileStatement whileStatement = new WhileStatement();
