@@ -124,8 +124,10 @@ public class CatScriptParser {
 
     private Statement parseIsStatement() {
         IsStatement isStatement = new IsStatement();
-        isStatement.setStart(tokens.consumeToken());
-        if (!isStatement.isDefault()) {
+        isStatement.setToken(tokens.consumeToken());
+        if (isStatement.isDefault()) {
+            String s = "test";
+        } else {
             require(LEFT_PAREN, isStatement);
             isStatement.setExpression(parseExpression());
             require(RIGHT_PAREN, isStatement);
@@ -413,7 +415,7 @@ public class CatScriptParser {
 
     private Expression parseFactorExpression() {
         Expression expression = parseUnaryExpression();
-        while (tokens.match(SLASH, STAR, MOD)) {
+        while (tokens.match(SLASH, STAR, MOD, OR, AND)) {
             Token operator = tokens.consumeToken();
             final Expression rightHandSide = parseUnaryExpression();
             FactorExpression factorExpression = new FactorExpression(operator, expression, rightHandSide);
@@ -497,6 +499,9 @@ public class CatScriptParser {
             }
             if (tokens.match(LEFT_BRACKET)) {
                 return parseIndexExpression(token);
+            }
+            if (tokens.match(QUESTION)) {
+                return parseNullCheckExpression(token);
             } else {
                 IdentifierExpression identifierExpression = new IdentifierExpression(token.getStringValue());
                 identifierExpression.setToken(token);
@@ -544,6 +549,14 @@ public class CatScriptParser {
             return parenthesizedExpression;
         }
         return new SyntaxErrorExpression(tokens.consumeToken());
+    }
+
+    private Expression parseNullCheckExpression(Token variableName) {
+        NullCheckExpression nullCheckExpression = new NullCheckExpression();
+        nullCheckExpression.setVariable(variableName);
+        nullCheckExpression.setStart(variableName);
+        nullCheckExpression.setEnd(tokens.consumeToken());
+        return nullCheckExpression;
     }
 
     private Expression parseIndexExpression(Token variableName) {

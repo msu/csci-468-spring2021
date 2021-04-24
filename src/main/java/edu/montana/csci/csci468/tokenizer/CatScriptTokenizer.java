@@ -155,6 +155,8 @@ public class CatScriptTokenizer {
             }
         } else if (matchAndConsume('%')) {
             tokenList.addToken(MOD, "%", start, postion, line, lineOffset);
+        } else if (matchAndConsume('?')) {
+            tokenList.addToken(QUESTION, "?", start, postion, line, lineOffset);
         } else {
             tokenList.addToken(ERROR, "<Unexpected Token: [" + takeChar() + "]>", start, postion, line, lineOffset);
         }
