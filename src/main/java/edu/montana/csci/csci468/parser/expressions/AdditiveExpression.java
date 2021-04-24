@@ -10,6 +10,7 @@ import edu.montana.csci.csci468.tokenizer.TokenType;
 import org.objectweb.asm.Opcodes;
 
 import static edu.montana.csci.csci468.bytecode.ByteCodeGenerator.internalNameFor;
+import static edu.montana.csci.csci468.util.Util.verifyOneOfTypes;
 
 public class AdditiveExpression extends Expression {
 
@@ -48,10 +49,10 @@ public class AdditiveExpression extends Expression {
             }
         }
         if (getType().equals(CatscriptType.STRING)) {
-            if (!leftHandSide.getType().equals(CatscriptType.STRING) && !leftHandSide.getType().equals(CatscriptType.INT) && !leftHandSide.getType().equals(CatscriptType.NULL)) {
+            if (!verifyOneOfTypes(leftHandSide, CatscriptType.STRING, CatscriptType.INT, CatscriptType.NULL)) {
                 leftHandSide.addError(ErrorType.INCOMPATIBLE_TYPES);
             }
-            if (!rightHandSide.getType().equals(CatscriptType.STRING) && !rightHandSide.getType().equals(CatscriptType.INT) && !rightHandSide.getType().equals(CatscriptType.NULL)) {
+            if (!verifyOneOfTypes(rightHandSide, CatscriptType.STRING, CatscriptType.INT, CatscriptType.NULL)) {
                 rightHandSide.addError(ErrorType.INCOMPATIBLE_TYPES);
             }
         }
@@ -78,8 +79,8 @@ public class AdditiveExpression extends Expression {
     @Override
     public Object evaluate(CatscriptRuntime runtime) {
         if (getType().equals(CatscriptType.STRING)) {
-            String leftString = (leftHandSide.getType().equals(CatscriptType.NULL)) ? "null" : leftHandSide.evaluate(runtime).toString();
-            String rightString = (rightHandSide.getType().equals(CatscriptType.NULL)) ? "null" : rightHandSide.evaluate(runtime).toString();
+            String leftString = String.valueOf(leftHandSide.evaluate(runtime));
+            String rightString = String.valueOf(rightHandSide.evaluate(runtime));
             return leftString + rightString;
         } else {
             return (isAdd()) ? (Integer) leftHandSide.evaluate(runtime) + (Integer) rightHandSide.evaluate(runtime) :

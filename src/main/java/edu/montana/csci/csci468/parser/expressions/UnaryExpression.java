@@ -49,11 +49,7 @@ public class UnaryExpression extends Expression {
 
     @Override
     public CatscriptType getType() {
-        if (isMinus()) {
-            return CatscriptType.INT;
-        } else {
-            return CatscriptType.BOOLEAN;
-        }
+        return (isMinus()) ? CatscriptType.INT : CatscriptType.BOOLEAN;
     }
 
     //==============================================================
@@ -63,11 +59,7 @@ public class UnaryExpression extends Expression {
     @Override
     public Object evaluate(CatscriptRuntime runtime) {
         Object rhsValue = getRightHandSide().evaluate(runtime);
-        if (this.isMinus()) {
-            return -1 * (Integer) rhsValue;
-        } else {
-            return !(Boolean) rhsValue;
-        }
+        return (isMinus()) ? -1 * (Integer) rhsValue : !(Boolean) rhsValue;
     }
 
     @Override
@@ -78,13 +70,13 @@ public class UnaryExpression extends Expression {
     @Override
     public void compile(ByteCodeGenerator code) {
         rightHandSide.compile(code);
-        if(isNot()) {
+        if (isNot()) {
             code.addInstruction(Opcodes.ICONST_1);
             code.addInstruction(Opcodes.IADD);
             code.addInstruction(Opcodes.ICONST_2);
             code.addInstruction(Opcodes.IREM);
         }
-        if(isMinus()){
+        if (isMinus()) {
             code.pushConstantOntoStack(-1);
             code.addInstruction(Opcodes.IMUL);
         }

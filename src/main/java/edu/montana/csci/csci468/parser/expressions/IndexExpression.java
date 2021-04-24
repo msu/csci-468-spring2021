@@ -33,10 +33,7 @@ public class IndexExpression extends Expression {
     public Object evaluate(CatscriptRuntime runtime) {
         ArrayList list = (ArrayList) runtime.getValue(variableName);
         Integer index = (Integer) expression.evaluate(runtime);
-        if (index < 0) {
-            return list.get(((Integer) expression.evaluate(runtime)) + list.size());
-        }
-        return list.get((Integer) expression.evaluate(runtime));
+        return list.get(index + ((index < 0) ? list.size() : 0));
     }
 
     @Override
