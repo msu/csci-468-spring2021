@@ -14,6 +14,7 @@ import edu.montana.csci.csci468.parser.expressions.RangeExpression;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.Opcodes;
 
+import javax.naming.ldap.Control;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -93,16 +94,24 @@ public class ForStatement extends Statement {
     public void execute(CatscriptRuntime runtime) {
         runtime.pushScope();
         if (expression instanceof RangeExpression) {
-            Integer integer = (Integer) expression.evaluate(runtime);
-            for (int x = 0; x < integer; x++) {
+            List<Integer> control = (List<Integer>) expression.evaluate(runtime);
+            Integer start = 0, stop = control.get(0), step = 1;
+            if (control.size() > 1) {
+                start = control.get(0);
+                stop = control.get(1);
+                if (control.size() == 3) {
+                    step = control.get(2);
+                }
+            }
+            for (int x = start; x < stop; x += step) {
                 try {
                     runtime.setValue(variableName, x);
                     for (Statement statement : body) {
                         statement.execute(runtime);
                     }
-                } catch (BreakExeption b){
+                } catch (BreakExeption b) {
                     break;
-                } catch (ContinueException ignored){
+                } catch (ContinueException ignored) {
 
                 }
             }
@@ -116,7 +125,7 @@ public class ForStatement extends Statement {
                     }
                 } catch (BreakExeption b) {
                     break;
-                } catch (ContinueException ignored){
+                } catch (ContinueException ignored) {
 
                 }
             }

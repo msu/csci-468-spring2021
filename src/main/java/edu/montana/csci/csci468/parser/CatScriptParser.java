@@ -345,7 +345,12 @@ public class CatScriptParser {
         RangeExpression rangeExpression = new RangeExpression();
         rangeExpression.setStart(tokens.consumeToken());
         require(LEFT_PAREN, rangeExpression);
-        rangeExpression.setExpression(parseExpression());
+        List<Expression> control = new ArrayList<>();
+        while (!tokens.match(RIGHT_PAREN) && tokens.hasMoreTokens()) {
+            control.add(parseExpression());
+            tokens.matchAndConsume(COMMA);
+        }
+        rangeExpression.setControl(control);
         require(RIGHT_PAREN, rangeExpression);
         return rangeExpression;
     }

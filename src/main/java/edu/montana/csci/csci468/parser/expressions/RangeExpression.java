@@ -6,29 +6,23 @@ import edu.montana.csci.csci468.parser.CatscriptType;
 import edu.montana.csci.csci468.parser.ErrorType;
 import edu.montana.csci.csci468.parser.SymbolTable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class RangeExpression extends Expression {
 
-    private Expression expression;
-
-    public void setExpression(Expression expression) {
-        this.expression = expression;
-    }
-
-    public Expression getExpression() {
-        return expression;
-    }
+    private List<Expression> control;
 
     @Override
     public void validate(SymbolTable symbolTable) {
-        if(expression == null){
-            addError(ErrorType.INCOMPATIBLE_TYPES);
+        if (control.size() < 1 || control.size() > 3) {
+            addError(ErrorType.UNEXPECTED_TOKEN);
         }
-
     }
 
     @Override
     public CatscriptType getType() {
-        return expression.getType();
+        return CatscriptType.INT;
     }
 
     //==============================================================
@@ -37,20 +31,25 @@ public class RangeExpression extends Expression {
 
     @Override
     public Object evaluate(CatscriptRuntime runtime) {
-        return expression.evaluate(runtime);
+        List<Integer> ints = new ArrayList<>();
+        for (Expression expression : control) {
+            ints.add((Integer) expression.evaluate(runtime));
+        }
+        return ints;
     }
 
     @Override
     public void transpile(StringBuilder javascript) {
-        javascript.append("(");
-        expression.transpile(javascript);
-        javascript.append(")");
+
     }
 
     @Override
     public void compile(ByteCodeGenerator code) {
-        expression.compile(code);
+
     }
 
 
+    public void setControl(List<Expression> control) {
+        this.control = control;
+    }
 }
