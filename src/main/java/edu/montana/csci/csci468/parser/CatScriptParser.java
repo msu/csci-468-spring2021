@@ -125,9 +125,8 @@ public class CatScriptParser {
     private Statement parseIsStatement() {
         IsStatement isStatement = new IsStatement();
         isStatement.setToken(tokens.consumeToken());
-        if (isStatement.isDefault()) {
-            String s = "test";
-        } else {
+
+        if (!isStatement.isDefault()) {
             require(LEFT_PAREN, isStatement);
             isStatement.setExpression(parseExpression());
             require(RIGHT_PAREN, isStatement);
@@ -149,7 +148,11 @@ public class CatScriptParser {
         require(LEFT_BRACE, dowhileStatement);
         List<Statement> body = new ArrayList<>();
         while (!tokens.match(RIGHT_BRACE) && tokens.hasMoreTokens()) {
-            body.add(parseProgramStatement());
+            Statement statement = parseReturnStatement();
+            if(!(statement instanceof IsStatement)){
+                dowhileStatement.addError(ErrorType.INCOMPATIBLE_TYPES);
+            }
+            body.add(statement);
         }
         require(RIGHT_BRACE, dowhileStatement);
         require(WHILE, dowhileStatement);

@@ -55,15 +55,7 @@ public class EqualityExpression extends Expression {
 
     @Override
     public Object evaluate(CatscriptRuntime runtime) {
-        Object rightHandSide = getRightHandSide().evaluate(runtime);
-        Object leftHandSide = getLeftHandSide().evaluate(runtime);
-        if(isEqual()){
-            return leftHandSide == rightHandSide;
-
-        }
-        else{
-            return leftHandSide != rightHandSide;
-        }
+        return isEqual() == (getRightHandSide().evaluate(runtime) == getLeftHandSide().evaluate(runtime));
     }
 
     @Override
@@ -75,14 +67,13 @@ public class EqualityExpression extends Expression {
     public void compile(ByteCodeGenerator code) {
         Label then = new Label();
         Label end = new Label();
-        if(isEqual()){
+        if (isEqual()) {
             leftHandSide.compile(code);
             box(code, leftHandSide.getType());
             rightHandSide.compile(code);
             box(code, rightHandSide.getType());
-            code.addJumpInstruction(Opcodes.IF_ACMPNE,then);
-        }
-        else{
+            code.addJumpInstruction(Opcodes.IF_ACMPNE, then);
+        } else {
             leftHandSide.compile(code);
             box(code, leftHandSide.getType());
             rightHandSide.compile(code);
