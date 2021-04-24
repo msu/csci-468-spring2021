@@ -38,9 +38,6 @@ public class IndexExpression extends Expression {
 
     @Override
     public void transpile(StringBuilder javascript) {
-        javascript.append("(");
-        expression.transpile(javascript);
-        javascript.append(")");
     }
 
     @Override
