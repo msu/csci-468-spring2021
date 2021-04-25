@@ -92,7 +92,7 @@ public class CatScriptParser {
         if (tokens.match(CONTINUE)) {
             return parseContinueStatement();
         }
-        if (tokens.match(DO)) {
+        if (tokens.match(DOWHILE)) {
             return parseDoWhileStatement();
         }
         if (tokens.match(SWITCH)) {
@@ -142,26 +142,21 @@ public class CatScriptParser {
     }
 
     private Statement parseDoWhileStatement() {
-        DoWhileStatement dowhileStatement = new DoWhileStatement();
-        currentWhileStatement = dowhileStatement;
-        dowhileStatement.setStart(tokens.consumeToken());
-        require(LEFT_BRACE, dowhileStatement);
-        List<Statement> body = new ArrayList<>();
+        DoWhileStatement whileStatement = new DoWhileStatement();
+        currentWhileStatement = whileStatement;
+        whileStatement.setStart(tokens.consumeToken());
+        require(LEFT_PAREN, whileStatement);
+        whileStatement.setExpression(parseExpression());
+        require(RIGHT_PAREN, whileStatement);
+        require(LEFT_BRACE, whileStatement);
+        List<Statement> body = new LinkedList<>();
         while (!tokens.match(RIGHT_BRACE) && tokens.hasMoreTokens()) {
-            Statement statement = parseReturnStatement();
-            if(!(statement instanceof IsStatement)){
-                dowhileStatement.addError(ErrorType.INCOMPATIBLE_TYPES);
-            }
-            body.add(statement);
+            body.add(parseProgramStatement());
         }
-        require(RIGHT_BRACE, dowhileStatement);
-        require(WHILE, dowhileStatement);
-        require(LEFT_PAREN, dowhileStatement);
-        dowhileStatement.setExpression(parseExpression());
-        require(RIGHT_PAREN, dowhileStatement);
+        require(RIGHT_BRACE, whileStatement);
         currentWhileStatement = null;
-        dowhileStatement.setBody(body);
-        return dowhileStatement;
+        whileStatement.setBody(body);
+        return whileStatement;
     }
 
     private Statement parseContinueStatement() {
