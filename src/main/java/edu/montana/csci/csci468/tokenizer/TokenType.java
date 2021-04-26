@@ -20,7 +20,7 @@ public enum TokenType {
     // keywords
     ELSE, FALSE, FUNCTION, FOR, IF, IN, NOT, NULL,
     PRINT, RETURN, TRUE, VAR, RANGE,
-    WHILE, BREAK, CONTINUE, DO, SWITCH, IS, DEFAULT, QUESTION,
+    WHILE, BREAK, CONTINUE, DOWHILE, SWITCH, IS, DEFAULT, QUESTION,
 
     AND, OR,
 
@@ -46,7 +46,7 @@ public enum TokenType {
         KEYWORDS.put("while", WHILE);
         KEYWORDS.put("break", BREAK);
         KEYWORDS.put("continue", CONTINUE);
-        KEYWORDS.put("do", DO);
+        KEYWORDS.put("dowhile", DOWHILE);
         KEYWORDS.put("is", IS);
         KEYWORDS.put("switch", SWITCH);
         KEYWORDS.put("def", DEFAULT);

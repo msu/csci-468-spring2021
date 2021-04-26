@@ -73,6 +73,8 @@ public class CatScriptParser {
             Token variable_name = tokens.consumeToken();
             if (tokens.matchAndConsume(EQUAL)) {
                 return parseAssignmentStatement(variable_name);
+            } else if (tokens.matchAndConsume(LEFT_BRACKET)) {
+                return parseArrayAssignmentStatement(variable_name);
             } else if (tokens.match(LEFT_PAREN)) {
                 return new FunctionCallStatement(parseFunctionExpression(variable_name));
             }
@@ -92,7 +94,7 @@ public class CatScriptParser {
         if (tokens.match(CONTINUE)) {
             return parseContinueStatement();
         }
-        if (tokens.match(DO)) {
+        if (tokens.match(DOWHILE)) {
             return parseDoWhileStatement();
         }
         if (tokens.match(SWITCH)) {
@@ -102,6 +104,19 @@ public class CatScriptParser {
             return parseIsStatement();
         }
         return new SyntaxErrorStatement(tokens.consumeToken());
+    }
+
+    private Statement parseArrayAssignmentStatement(Token variable_name) {
+        AssignmentStatement assignmentStatement = new AssignmentStatement();
+        assignmentStatement.setStart(variable_name);
+        assignmentStatement.setVariableName(variable_name.getStringValue());
+        assignmentStatement.setArrayIndex(parseExpression());
+        require(RIGHT_BRACKET, assignmentStatement);
+        require(EQUAL, assignmentStatement);
+        Expression expression = parseExpression();
+        assignmentStatement.setExpression(expression);
+        assignmentStatement.setEnd(expression.getEnd());
+        return assignmentStatement;
     }
 
     private Statement parseSwitchStatement() {
@@ -142,26 +157,21 @@ public class CatScriptParser {
     }
 
     private Statement parseDoWhileStatement() {
-        DoWhileStatement dowhileStatement = new DoWhileStatement();
-        currentWhileStatement = dowhileStatement;
-        dowhileStatement.setStart(tokens.consumeToken());
-        require(LEFT_BRACE, dowhileStatement);
-        List<Statement> body = new ArrayList<>();
+        DoWhileStatement whileStatement = new DoWhileStatement();
+        currentWhileStatement = whileStatement;
+        whileStatement.setStart(tokens.consumeToken());
+        require(LEFT_PAREN, whileStatement);
+        whileStatement.setExpression(parseExpression());
+        require(RIGHT_PAREN, whileStatement);
+        require(LEFT_BRACE, whileStatement);
+        List<Statement> body = new LinkedList<>();
         while (!tokens.match(RIGHT_BRACE) && tokens.hasMoreTokens()) {
-            Statement statement = parseReturnStatement();
-            if(!(statement instanceof IsStatement)){
-                dowhileStatement.addError(ErrorType.INCOMPATIBLE_TYPES);
-            }
-            body.add(statement);
+            body.add(parseProgramStatement());
         }
-        require(RIGHT_BRACE, dowhileStatement);
-        require(WHILE, dowhileStatement);
-        require(LEFT_PAREN, dowhileStatement);
-        dowhileStatement.setExpression(parseExpression());
-        require(RIGHT_PAREN, dowhileStatement);
+        require(RIGHT_BRACE, whileStatement);
         currentWhileStatement = null;
-        dowhileStatement.setBody(body);
-        return dowhileStatement;
+        whileStatement.setBody(body);
+        return whileStatement;
     }
 
     private Statement parseContinueStatement() {

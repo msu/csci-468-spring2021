@@ -8,9 +8,12 @@ import edu.montana.csci.csci468.parser.ParseError;
 import edu.montana.csci.csci468.parser.SymbolTable;
 import edu.montana.csci.csci468.parser.expressions.Expression;
 
+import java.util.ArrayList;
+
 public class AssignmentStatement extends Statement {
     private Expression expression;
     private String variableName;
+    private Expression arrayIndex;
 
     public Expression getExpression() {
         return expression;
@@ -35,7 +38,7 @@ public class AssignmentStatement extends Statement {
         if (symbolType == null) {
             addError(ErrorType.UNKNOWN_NAME);
         } else {
-            if (symbolTable.getSymbolType(variableName) != expression.getType()) {
+            if (symbolTable.getSymbolType(variableName) != expression.getType() && arrayIndex == null) {
                 addError(ErrorType.INCOMPATIBLE_TYPES);
             }
         }
@@ -46,8 +49,12 @@ public class AssignmentStatement extends Statement {
     //==============================================================
     @Override
     public void execute(CatscriptRuntime runtime) {
-        runtime.setValue(variableName,expression.evaluate(runtime));
-        //super.execute(runtime);
+        if (arrayIndex == null) {
+            runtime.setValue(variableName, expression.evaluate(runtime));
+        } else {
+            ArrayList<Object> array = (ArrayList<Object>) runtime.getValue(variableName);
+            array.set((Integer) arrayIndex.evaluate(runtime), expression.evaluate(runtime));
+        }
     }
 
     @Override
@@ -58,5 +65,9 @@ public class AssignmentStatement extends Statement {
     @Override
     public void compile(ByteCodeGenerator code) {
         super.compile(code);
+    }
+
+    public void setArrayIndex(Expression arrayIndex) {
+        this.arrayIndex = arrayIndex;
     }
 }
