@@ -9,20 +9,18 @@ import java.util.ArrayList;
 
 public class IndexExpression extends Expression {
     private String variableName;
-    private Expression expression;
-
-    public Expression getExpression() {
-        return expression;
-    }
+    private ArrayList<Expression> indexes;
 
     @Override
     public void validate(SymbolTable symbolTable) {
-        expression.validate(symbolTable);
+        for (Expression index : indexes) {
+            index.validate(symbolTable);
+        }
     }
 
     @Override
     public CatscriptType getType() {
-        return expression.getType();
+        return indexes.get(0).getType();
     }
 
     //==============================================================
@@ -31,9 +29,12 @@ public class IndexExpression extends Expression {
 
     @Override
     public Object evaluate(CatscriptRuntime runtime) {
-        ArrayList list = (ArrayList) runtime.getValue(variableName);
-        Integer index = (Integer) expression.evaluate(runtime);
-        return list.get(index + ((index < 0) ? list.size() : 0));
+        ArrayList<Object> array = (ArrayList<Object>) runtime.getValue(variableName);
+        for (int i = 0; i < indexes.size() - 1; i++) {
+            array = (ArrayList<Object>) array.get((Integer) indexes.get(i).evaluate(runtime));
+        }
+        int index = (Integer) indexes.get(indexes.size() - 1).evaluate(runtime);
+        return array.get(index + ((index < 0) ? array.size() : 0));
     }
 
     @Override
@@ -49,7 +50,7 @@ public class IndexExpression extends Expression {
         this.variableName = variableName;
     }
 
-    public void setExpression(Expression expression) {
-        this.expression = expression;
+    public void setIndexes(ArrayList<Expression> indexes) {
+        this.indexes = indexes;
     }
 }

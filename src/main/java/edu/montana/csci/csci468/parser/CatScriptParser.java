@@ -73,7 +73,7 @@ public class CatScriptParser {
             Token variable_name = tokens.consumeToken();
             if (tokens.matchAndConsume(EQUAL)) {
                 return parseAssignmentStatement(variable_name);
-            } else if (tokens.matchAndConsume(LEFT_BRACKET)) {
+            } else if (tokens.match(LEFT_BRACKET)) {
                 return parseArrayAssignmentStatement(variable_name);
             } else if (tokens.match(LEFT_PAREN)) {
                 return new FunctionCallStatement(parseFunctionExpression(variable_name));
@@ -110,8 +110,12 @@ public class CatScriptParser {
         AssignmentStatement assignmentStatement = new AssignmentStatement();
         assignmentStatement.setStart(variable_name);
         assignmentStatement.setVariableName(variable_name.getStringValue());
-        assignmentStatement.setArrayIndex(parseExpression());
-        require(RIGHT_BRACKET, assignmentStatement);
+        ArrayList<Expression> index = new ArrayList<>();
+        while (tokens.matchAndConsume(LEFT_BRACKET) && tokens.hasMoreTokens()) {
+            index.add(parseExpression());
+            require(RIGHT_BRACKET, assignmentStatement);
+        }
+        assignmentStatement.setArrayIndex(index);
         require(EQUAL, assignmentStatement);
         Expression expression = parseExpression();
         assignmentStatement.setExpression(expression);
@@ -574,10 +578,14 @@ public class CatScriptParser {
 
     private Expression parseIndexExpression(Token variableName) {
         IndexExpression indexExpression = new IndexExpression();
-        indexExpression.setStart(tokens.consumeToken());
+        indexExpression.setStart(tokens.getCurrentToken());
+        ArrayList<Expression> indexes = new ArrayList<>();
+        while(tokens.matchAndConsume(LEFT_BRACKET) && tokens.hasMoreTokens()){
+            indexes.add(parsePrimaryExpression());
+            require(RIGHT_BRACKET, indexExpression);
+        }
         indexExpression.setVariableName(variableName.getStringValue());
-        indexExpression.setExpression(parseExpression());
-        require(RIGHT_BRACKET, indexExpression);
+        indexExpression.setIndexes(indexes);
         return indexExpression;
     }
 
