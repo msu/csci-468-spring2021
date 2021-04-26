@@ -4,10 +4,8 @@ import edu.montana.csci.csci468.bytecode.ByteCodeGenerator;
 import edu.montana.csci.csci468.eval.CatscriptRuntime;
 import edu.montana.csci.csci468.parser.CatscriptType;
 import edu.montana.csci.csci468.parser.ErrorType;
-import edu.montana.csci.csci468.parser.ParseError;
 import edu.montana.csci.csci468.parser.SymbolTable;
 import edu.montana.csci.csci468.parser.expressions.Expression;
-import org.eclipse.jetty.websocket.common.OpCode;
 import org.objectweb.asm.Opcodes;
 
 public class VariableStatement extends Statement {
@@ -50,9 +48,8 @@ public class VariableStatement extends Statement {
         if (symbolTable.hasSymbol(variableName)) {
             addError(ErrorType.DUPLICATE_NAME);
         } else {
-            if (explicitType == null) {
-                type = expression.getType();
-            } else if (!explicitType.isAssignableFrom(expression.getType())) {
+            type = (explicitType != null) ? explicitType : expression.getType();
+            if (!type.isAssignableFrom(expression.getType())) {
                 addError(ErrorType.INCOMPATIBLE_TYPES);
             }
             symbolTable.registerSymbol(variableName, type);

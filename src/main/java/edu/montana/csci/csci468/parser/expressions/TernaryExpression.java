@@ -21,7 +21,7 @@ public class TernaryExpression extends Expression {
 
     @Override
     public CatscriptType getType() {
-        return trueExpression.getType();
+        return (trueExpression.getType() == falseExpression.getType()) ? trueExpression.getType() : CatscriptType.OBJECT;
     }
 
     //==============================================================

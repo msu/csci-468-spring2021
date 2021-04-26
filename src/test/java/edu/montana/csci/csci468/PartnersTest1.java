@@ -1,15 +1,22 @@
 package edu.montana.csci.csci468;
 
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class PartnersTest1 extends CatscriptTestBase{
+public class PartnersTest1 extends CatscriptTestBase {
+
+    @Test
+    void explicit() {
+        assertEquals("1\n", executeProgram("var x: int = 1\n" + "  print(x)"));
+    }
+
     @Test
     void forWorks() {
         assertEquals("Hello\nHello\nHello\nHello\nHello\n", executeProgram(
                 "var x = 5" +
-                "function loop(arg:int){" +
-                "for (i in arg){" +
+                        "function loop(arg:int){" +
+                        "for (i in arg){" +
                         "print(\"Hello\")" +
                         "}" +
                         "}" +
@@ -23,7 +30,7 @@ public class PartnersTest1 extends CatscriptTestBase{
                 "var sum = 0" +
                         "var count = 0" +
                         "var avg = 0" +
-                "function average(arg : list<int>): string{" +
+                        "function average(arg : list<int>): string{" +
                         "for(i in arg){" +
                         "sum = sum + i" +
                         "count = count + 1" +
@@ -36,7 +43,7 @@ public class PartnersTest1 extends CatscriptTestBase{
     }
 
     @Test
-    void fib(){
+    void fib() {
         assertEquals("0\n1\n1\n2\n3\n5", executeProgram(
                 "var max = 6" +
                         "var prev = 0" +
@@ -46,7 +53,7 @@ public class PartnersTest1 extends CatscriptTestBase{
                         "print(prev)" +
                         "sum = prev + next" +
                         "next = sum" +
-                "}"
+                        "}"
         ));
     }
 }

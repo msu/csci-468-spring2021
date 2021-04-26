@@ -41,10 +41,6 @@ public class NullCheckExpression extends Expression {
 
     }
 
-    public Token getVariable() {
-        return variable;
-    }
-
     public void setVariable(Token variable) {
         this.variable = variable;
     }
