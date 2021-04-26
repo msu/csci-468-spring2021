@@ -51,10 +51,46 @@ The following code accomplishes the same task, yet an explicit type is defined.
 > var str: string = "Catscript!"
 
 You may use explicit type declarations with list objects as well. The following example creates a list of integers. 
-> var l: list<int> = [1,2,3,4,5]
+> var l: list\<int\> = [1,2,3,4,5]
+
+### Mathematical Operations
+#### Addition & Subtraction
+Catscript supports basic addition and subtraction between integer types. In addition, string concatenation may be performed if either side of an additive expression is of type string.
+> print(5+6) //evaluates to 11</br>
+> print(5-6) //evaluates to -1</br>
+> print(5+"foo") //evaluates to "5foo"
+
+#### Division and Multiplication
+Catscript supports division and multiplication between integer types. 
+> var x = 5</br>
+> var y = 6</br>
+> print(x*y) // evaluates to 30 </br>
+> print(x/6) // evaluates to 0
+
+### Unary Operators
+Catscript supports two primary unary operators, integer negation and the boolean "not" operator. 
+> var x = 5
+> print(-x) //print's "-5"</br>
+> not false // evaluates to true
+
+### Local Operators
+#### Comparison Operators
+Catscript supports all primary comparison operators including greater than, less than, greater than or equal, and less than or equal.
+> 5 < 6 // evaluates to true</br>
+> 5 > 6 //evaluates to false</br>
+> 5 <= 6 //evaluates to true</br>
+> 5 >= 6 //evaluates to false
+
+#### Equality Operators
+In addition the equality between two objects may be checked as long as they are of the same type. Supported operands are "equals equals" and "not equals". 
+> 5 == 6 // evaluates to false</br>
+> 5 != 6 // evaluates to true
+
 
 ### If Statements
-Catscript uses the same syntax as Java to parse for statements. Catscript also supports typical else and else if statements.  The following example demonstrates basic if statement syntax. 
+Catscript uses the same syntax as Java to parse for statements. Catscript also supports typical else and else if statements. 
+A user may use any comparison operators, boolean literals, or any expression which evaluates to a boolean. </br>
+The following example demonstrates basic if statement syntax. 
 
 > var x = 5</br>
 > if(x == 4){</br>
@@ -85,7 +121,16 @@ The following function declaration creates a function named "foo", makes use of 
 #### Explicitly Typed
 The following function declaration creates the same function, but uses explicit types for its parameters, and defined a return type of string.
 > function foo(myint: int, mystring: string, mylist: list\<object\>) : string {</br>
+> //statements</br>
 > return mystring</br>
 > }
 
-The
+### Function Call Expressions
+A function may be called by invoking the functions name, and passing in any necessary parameters. The function call statement will then return any object which is returned from the function.
+In the following example, the function foo is invoked with the integer value 5. The function then returns the value 5, which is assigned to the variable y. 
+> function foo(x: int) : int{</br>
+>  return x
+> }</br>
+> var y = foo(5)
+
+
