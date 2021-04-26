@@ -73,6 +73,8 @@ public class CatScriptParser {
             Token variable_name = tokens.consumeToken();
             if (tokens.matchAndConsume(EQUAL)) {
                 return parseAssignmentStatement(variable_name);
+            } else if (tokens.matchAndConsume(LEFT_BRACKET)) {
+                return parseArrayAssignmentStatement(variable_name);
             } else if (tokens.match(LEFT_PAREN)) {
                 return new FunctionCallStatement(parseFunctionExpression(variable_name));
             }
@@ -102,6 +104,19 @@ public class CatScriptParser {
             return parseIsStatement();
         }
         return new SyntaxErrorStatement(tokens.consumeToken());
+    }
+
+    private Statement parseArrayAssignmentStatement(Token variable_name) {
+        AssignmentStatement assignmentStatement = new AssignmentStatement();
+        assignmentStatement.setStart(variable_name);
+        assignmentStatement.setVariableName(variable_name.getStringValue());
+        assignmentStatement.setArrayIndex(parseExpression());
+        require(RIGHT_BRACKET, assignmentStatement);
+        require(EQUAL, assignmentStatement);
+        Expression expression = parseExpression();
+        assignmentStatement.setExpression(expression);
+        assignmentStatement.setEnd(expression.getEnd());
+        return assignmentStatement;
     }
 
     private Statement parseSwitchStatement() {
