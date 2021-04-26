@@ -15,7 +15,19 @@ Catscript features a small and simple type system as follows</br>
 * object - Contain any value</br></br>
 In addition to these basic types, Catscript features supports explicit types, as well as type inference. Catscript also features a shared namespace, wherein variable names from all fields and sub-scopes are stored in the same location. 
 
+
+### Comments
+Catscript features java-style comments. "//" is used to denote a single line comment, and "/* */" may be used to surround multiline comments.
+> var x = 5</br>
+> //This is a comment</br>
+> print(x)</br>
+> /*
+> This is</br>
+> also a comment
+> */
+
 ### Variable Declaration
+#### Inferred Type
 To create a variable in Catscript you must use the 'var' keyword. </br>
 Here the variables x,y, and str are created and their types inferred as an integer, boolean, and string respectively.
 
@@ -31,5 +43,49 @@ Here x is defined as a list of type int, the type is inferred during statement p
 Catscript also supports object type lists, and multi-dimensional lists.
 > var x = [1,2,"foo", [1,5,6]]
 
+#### Explicitly Typed
+While Catscript features type inference, you may also explicitly define an object's type. 
+The following code accomplishes the same task, yet an explicit type is defined. 
+> var x: int = 5</br>
+> var y: bool = true</br>
+> var str: string = "Catscript!"
 
-### For loops
+You may use explicit type declarations with list objects as well. The following example creates a list of integers. 
+> var l: list<int> = [1,2,3,4,5]
+
+### If Statements
+Catscript uses the same syntax as Java to parse for statements. Catscript also supports typical else and else if statements.  The following example demonstrates basic if statement syntax. 
+
+> var x = 5</br>
+> if(x == 4){</br>
+>  //true statements</br>
+> }</br>
+> else if(x == 3){</br>
+>  //else if statements</br>
+> } else{</br>
+> //else statements</br>
+> }
+### For Loops
+For loops may be used to iterate through the contents of any array. Similar to python, Catscript takes advantage of the "in" keyword to facilitate array iteration.
+
+> var x = [1,2,3,4] </br>
+> for(i in x){</br>
+>    print(i)</br>
+> }</br>
+
+The statement above evaluates to "1234", as "i" is assigned to each value contained within x as the iteration proceeds. 
+
+### Function Definitions
+A function may be defined by using the keyword "function" followed by an identifier and parameters. Function declaration statements also feature type inference. The return type is assumed to be void, unless defined otherwise following the parameters
+#### Type inferred
+The following function declaration creates a function named "foo", makes use of type inference for its arguments, and features a default void return type. 
+> function foo(myint, mystring, mylist){</br>
+> //statements</br>
+> }</br>
+#### Explicitly Typed
+The following function declaration creates the same function, but uses explicit types for its parameters, and defined a return type of string.
+> function foo(myint: int, mystring: string, mylist: list\<object\>) : string {</br>
+> return mystring</br>
+> }
+
+The
