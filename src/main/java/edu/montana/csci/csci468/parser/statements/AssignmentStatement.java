@@ -29,6 +29,9 @@ public class AssignmentStatement extends Statement {
 
     public void setVariableName(String variableName) {
         this.variableName = variableName;
+        boolean bool = false;
+        int x;
+        x = (bool) ? 1 : 0;
     }
 
     @Override

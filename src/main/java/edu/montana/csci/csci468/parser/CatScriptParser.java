@@ -563,10 +563,23 @@ public class CatScriptParser {
             Expression expression = parseExpression();
             ParenthesizedExpression parenthesizedExpression = new ParenthesizedExpression(expression);
             require(RIGHT_PAREN, parenthesizedExpression);
+            if(tokens.matchAndConsume(QUESTION)){
+                return parseTernaryExpression(parenthesizedExpression);
+            }
             return parenthesizedExpression;
         }
         return new SyntaxErrorExpression(tokens.consumeToken());
     }
+
+    private Expression parseTernaryExpression(ParenthesizedExpression parenthesizedExpression) {
+        TernaryExpression ternaryExpression = new TernaryExpression();
+        ternaryExpression.setParenthesizedExpression(parenthesizedExpression);
+        ternaryExpression.setTrueExpression(parseExpression());
+        require(COLON, ternaryExpression);
+        ternaryExpression.setFalseExpression(parseExpression());
+        return ternaryExpression;
+    }
+
 
     private Expression parseNullCheckExpression(Token variableName) {
         NullCheckExpression nullCheckExpression = new NullCheckExpression();
