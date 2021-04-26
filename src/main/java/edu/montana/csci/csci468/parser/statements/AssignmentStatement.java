@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class AssignmentStatement extends Statement {
     private Expression expression;
     private String variableName;
-    private Expression arrayIndex;
+    private ArrayList<Expression> arrayIndex;
 
     public Expression getExpression() {
         return expression;
@@ -29,6 +29,9 @@ public class AssignmentStatement extends Statement {
 
     public void setVariableName(String variableName) {
         this.variableName = variableName;
+        boolean bool = false;
+        int x;
+        x = (bool) ? 1 : 0;
     }
 
     @Override
@@ -53,7 +56,10 @@ public class AssignmentStatement extends Statement {
             runtime.setValue(variableName, expression.evaluate(runtime));
         } else {
             ArrayList<Object> array = (ArrayList<Object>) runtime.getValue(variableName);
-            array.set((Integer) arrayIndex.evaluate(runtime), expression.evaluate(runtime));
+            for (int i = 0; i < arrayIndex.size() - 1; i++) {
+                array = (ArrayList<Object>) array.get((Integer) arrayIndex.get(i).evaluate(runtime));
+            }
+            array.set((Integer) arrayIndex.get(arrayIndex.size() - 1).evaluate(runtime), expression.evaluate(runtime));
         }
     }
 
@@ -67,7 +73,7 @@ public class AssignmentStatement extends Statement {
         super.compile(code);
     }
 
-    public void setArrayIndex(Expression arrayIndex) {
+    public void setArrayIndex(ArrayList<Expression> arrayIndex) {
         this.arrayIndex = arrayIndex;
     }
 }
