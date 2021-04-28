@@ -4,55 +4,53 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import edu.montana.csci.csci468.parser.expressions.*;
+import edu.montana.csci.csci468.parser.statements.CatScriptProgram;
+
 public class PartnersTest1 extends CatscriptTestBase {
-
-    @Test
-    void explicit() {
-        assertEquals("1\n", executeProgram("var x: int = 1\n" + "  print(x)"));
-    }
-
     @Test
     void forWorks() {
         assertEquals("Hello\nHello\nHello\nHello\nHello\n", executeProgram(
-                "var x = 5" +
-                        "function loop(arg:int){" +
-                        "for (i in arg){" +
+                "var arg = [1, 2, 3, 4, 5]" +
+                        "function loop(x:list<int>){" +
+                        "for (i in x){" +
                         "print(\"Hello\")" +
                         "}" +
                         "}" +
-                        "loop(5)"
+                        "loop(arg)"
         ));
     }
 
     @Test
     void findTheAvg() {
-        assertEquals("4", executeProgram(
-                "var sum = 0" +
-                        "var count = 0" +
-                        "var avg = 0" +
-                        "function average(arg : list<int>): string{" +
-                        "for(i in arg){" +
-                        "sum = sum + i" +
-                        "count = count + 1" +
-                        "}" +
-                        "avg = sum / count" +
-                        "}" +
-                        "var list = [2,4,6]" +
-                        "print(average(list))"
+        assertEquals("4\n", executeProgram(
+                "var sum= 0\n" +
+                        "var count = 0\n" +
+                        "var avg = 0\n" +
+                        "function average(arg : list<int>){\n" +
+                        "for(i in arg){\n" +
+                        "sum = sum + i\n" +
+                        "count = count + 1\n" +
+                        "}\n" +
+                        "avg = sum / count\n" +
+                        "print(avg)\n" +
+                        "}\n" +
+                        "var list = [2,4,6]\n" +
+                        "average(list)\n"
         ));
     }
 
     @Test
-    void fib() {
-        assertEquals("0\n1\n1\n2\n3\n5", executeProgram(
-                "var max = 6" +
-                        "var prev = 0" +
-                        "var next = 1" +
-                        "var sum = 0" +
-                        "for (i in max){" +
-                        "print(prev)" +
-                        "sum = prev + next" +
-                        "next = sum" +
+    void ifElseIfElse() {
+        assertEquals("Hello World\n", executeProgram(
+                "var x = 8" +
+                        "if(x < 5){" +
+                        "print(\"No way\")" +
+                        "}" +
+                        "else if(x == 5){" +
+                        "print(\"Jose\")" +
+                        "} else {" +
+                        "print(\"Hello World\")" +
                         "}"
         ));
     }

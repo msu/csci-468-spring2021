@@ -102,6 +102,7 @@ public class CatScriptProgram extends Statement {
 
     @Override
     public void compile(ByteCodeGenerator code) {
+
         if (isExpression()) {
             code.addVarInstruction(Opcodes.ALOAD, 0);
             getExpression().compile(code);
